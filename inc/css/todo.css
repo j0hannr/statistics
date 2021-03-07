@@ -1,0 +1,429 @@
+html, body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    overflow-x: hidden;
+    background: white
+}
+
+/*section header*/
+
+
+/*header*/
+section#header {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 45px;
+    width: 100%;
+    background: white;
+}
+
+img.button {
+    display: none;
+}
+div.button {
+    cursor: pointer;
+    opacity: 0.3;
+}
+div#todo {
+    position: absolute;
+    right: 380px;
+    top: -5px;
+}
+div#edit {
+    position: absolute;
+    right: 235px;
+    top: -5px;
+}
+div#day {
+    position: absolute;
+    top: -5px;
+    right: 320px;
+    opacity: 0.8;
+}
+div#map {
+    position: absolute;
+    right: 150px;
+    top: -5px;
+}
+div#settings {
+    position: absolute;
+    right: 40px;
+    top: -5px;  
+}
+div#logout {
+    position: absolute;
+    right: 20px;
+    top: -5px;
+}
+p.buttontext {
+    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 100;
+    font-size: 26px;
+    color: black;
+}
+
+
+/*todo section*/
+
+section#todo {
+    position: absolute;
+    top: 0px;
+    left: 24.5%;
+    width: 75%;
+}
+
+select#cat {
+    /*display: none;*/
+    position: relative;
+    top: 10px;
+    margin: 0 auto;
+    background-color: white;
+    background: transparent;
+    color: black;
+    border-radius: 0px;
+    width: 200px;
+    /*height: 25px;*/
+    outline: 0px;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    border-left: none;
+    border-right: none;
+    display: none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance: none;
+    cursor: pointer;
+    text-align: center;
+    font-family: "HelveticaNeue-UltraLight", "Helvetica Neue UltraLight", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 100;
+    font-size: 22px;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+
+ul.todo {
+    position: absolute;
+    top: 50px;
+    left: 20px;
+    width: 92%;
+    padding: 0;
+}
+
+li.todo {
+    position: relative;
+    left: 0px;
+    background-color: rgba(0,0,0,0.02);
+    list-style-type: none;
+    padding-top:7px;
+    padding-bottom:7px;
+    padding-left:50px;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    font-size: 22px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 15px;
+    width: 100%;
+    min-height: 27px;
+}
+
+li.add {
+    border: 1px solid green;
+    color: green;
+}
+
+img.edde {
+    /*position: absolute;*/
+    height: 27px;
+    width: auto;
+    top: 7px;
+    opacity: 0.3;
+}
+
+img.edde:hover {
+    opacity: 0.7;
+}
+
+img.edde:active {
+    opacity: 1;
+}
+
+img.delete {
+    position: absolute;
+    right: 10px;
+}
+
+img.edit {
+    position: absolute;
+    right: 50px;
+}
+
+img.cencel {
+    position: absolute;
+    right: 50px;
+    display: none;
+    height: 27px;
+    width: auto;
+    top: 7px;
+    /*opacity: 0.3;*/
+}
+
+img.done {
+    position: absolute;
+    right: 10px;
+    display: none;
+    height: 27px;
+    width: auto;
+    top: 7px;
+    /*opacity: 0.3;*/
+}
+
+div.check {
+    position: absolute;
+    top: 5px;
+    left: 8px;
+    height: 33px;
+    width: auto;
+}
+
+img.check {
+    height: 100%;
+    width: auto;
+}
+
+div.text {
+    outline: 0;
+    width: 90%
+}
+
+/*category list*/
+
+div#catlist {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    /*max-width: 400px;*/
+    /*width: 35%;*/
+    width: 25%;
+    background-color: #8d8d8d;
+}
+
+ul#list {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 100%;
+    padding: 0;
+}
+
+li.category {
+    position: relative;
+    left: 0px;
+    /*background-color: rgba(0,0,0,0.02);*/
+    list-style-type: none;
+    padding-top:2px;
+    padding-bottom:12px;
+    /*padding-left:50px;*/
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    font-size: 25px;
+    border-radius: 3px;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    border-top: 1px solid rgba(0,0,0,0.06);
+    /*margin-bottom: 5px;*/
+    width: 100%;
+    min-height: 33px;
+    cursor: pointer;
+    border-radius: 0px;
+}
+
+img#addcat {
+    position: absolute;
+    left: 25px;
+    top: 12px;
+}
+
+div.cattext {
+    position: relative;
+    left: 20px;
+    top: 5px;
+}
+
+div#dayview {
+    display: none;
+}
+
+
+/*narrow width view --------------------------------------------------*/
+@media screen and (max-width: 620px) {
+    
+    html {
+        overflow-x: hidden;
+        width: 100%;
+    }
+    /*header*/
+    section#header {
+        display: none;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 50px;
+        /*background: green;*/
+    }
+   
+    p.buttontext {
+        display: none;
+    }
+    img.button {
+        width: auto;
+        height: 40px;
+        display: block;
+    }
+    div#map {
+        display: none;
+    }
+    div#todo {
+        position: absolute;
+        top: 10px;
+        height: 50px;
+        left: 40px;
+    }
+    div#edit {
+        position: absolute;
+        top: 10px;
+        height: 50px;
+        left: 50%;
+        margin-left: -20px;
+    }
+    div#settings {
+        position: absolute;
+        top: 10px;
+        height: 50px;
+        right: 40px;
+    }
+    
+    /*section todo*/
+    section#todo {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+    }
+    
+    ul.todo {
+        position: absolute;
+        top: 40px;
+        left: 2.5%;
+        width: 95%;
+        padding: 0;
+    }
+    
+    li.todo {
+        position: relative;
+        left: 0px;
+        background-color: rgba(0,0,0,0.02);
+        list-style-type: none;
+        padding-top:5px;
+        padding-bottom:5px;
+        padding-left:0px;
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+        font-weight: 300;
+        font-size: 17px;
+        border-radius: 3px;
+        border: 1px solid rgba(0,0,0,0.06);
+        margin-bottom: 10px;
+        width: 100%;
+        min-height: 27px;
+        height: auto;
+    }
+    
+    div.text {
+        left: 41px;
+    }
+    
+    span.posmoile {
+        position: relative;
+        left: 41px;
+    }
+    
+    select#cat {
+        display: block;
+    }
+    
+    div.check {
+        position: absolute;
+        top: 5px;
+        left: 6px;
+        height: 28px;
+        width: auto;
+    }
+    
+    div.text {
+        position: relative;
+        top: 3px;
+        width: 63%;
+    }
+    
+    img.edde {
+        /*position: absolute;*/
+        height: 20px;
+        width: auto;
+        top: 10px;
+        opacity: 0.5;
+    }
+
+    img.delete {
+        position: absolute;
+        right: 5px;
+    }
+
+    img.edit {
+        position: absolute;
+        right: 34px;
+    }
+
+    img.cencel {
+        position: absolute;
+        right: 50px;
+        display: none;
+        height: 24px;
+        width: auto;
+        top: 8px;
+        /*opacity: 0.3;*/
+    }
+
+    img.done {
+        position: absolute;
+        right: 10px;
+        display: none;
+        height: 24px;
+        width: auto;
+        top: 8px;
+        /*opacity: 0.3;*/
+    }
+    
+    div#catlist {
+        display: none;
+    }
+    
+    div#dayview {
+        display: block;
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        width: 40px;
+        height: 50px;
+        background-image: url(../img/backbutton.png);
+        background-size: 100% auto;
+        background-repeat: no-repeat;
+    }
+    
+
+    
+}

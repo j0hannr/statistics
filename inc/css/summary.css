@@ -1,0 +1,326 @@
+/*general*/
+
+/*stupid site structure*/
+
+#one {
+    position: absolute;
+    left: 0px;
+    top: 120px;
+    width: 30%;
+}
+
+#two {
+    position: absolute;
+    left: 33%;
+    top: 120px;
+    width: 30%;
+}
+
+#three {
+    position: absolute;
+    left: 66%;
+    top: 120px;
+    width: 30%;
+}
+
+
+
+
+
+/*field*/
+
+div#field {
+    height: auto;
+    width: 350px;
+    left: 30px;
+    margin: 50px;
+}
+
+div.field {
+    position: relative;
+    float: left;
+    width: 250px;
+    height: 120px;
+    /*    background-color: lightgray;*/
+    margin-bottom: 10px;
+    /* overflow: hidden; */
+}
+
+div.field > p.name {
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    font-weight: 800;
+    font-size: 66px;
+    color: rgba(220, 220, 220, 1);
+    text-transform: uppercase;
+    z-index: 10;
+    mix-blend-mode: multiply;
+}
+
+div.field > div.prev {
+    position: absolute;
+    top: 22px;
+    width: 100%;
+    height: 40px;
+    /*    background-color: aqua;*/
+}
+
+div.field > div.prev > p.prev_month {
+    position: absolute;
+    left: 0px;
+    top: -6px;
+    font-size: 12px;
+    color: rgba(220, 220, 220, 1);
+}
+
+div.field > div.prev > div.prev_number {
+
+    overflow: visible;
+    position: absolute;
+    top: 10px;
+    left: 0px;
+    height: 3px;
+    background-color: rgba(220, 220, 220, 1);
+    width: 50%;
+}
+
+div.field > div.prev > div.prev_number > p {
+    position: absolute;
+    right: 0px;
+    top: -20px;
+    background-color: white;
+    padding-left: 5px;
+    font-size: 22px;
+    color: rgba(220, 220, 220, 1);
+    font-weight: 400;
+}
+
+
+div.field > div.this {
+    position: absolute;
+    top: 27px;
+    width: 100%;
+    height: 80px;
+    /*    background-color: red;*/
+}
+
+div.field > div.this > p.month {
+    position: absolute;
+    left: 0px;
+    top: 33px;
+    font-size: 12px;
+    color: blue;
+}
+
+div.field > div.this > p.unit {
+    position: absolute;
+    left: 0px;
+    top: 54px;
+    font-size: 12px;
+    color: blue;
+    display: none;
+}
+
+
+div.field > div.this > div.number {
+
+    overflow: visible;
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    height: 3px;
+    background-color: blue;
+    width: 80%;
+}
+
+div.field > div.this > div.number > p {
+    position: absolute;
+    right: 0px;
+    font-size: 38px;
+    color: blue;
+    top: -37px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+
+/*places*/
+
+div#places {
+    position: relative;
+    float: left;
+    width: 250px;
+    height: 180px;
+    margin-bottom: 10px;
+
+}
+
+div#places p#places {
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    font-weight: 800;
+    font-size: 66px;
+    color: rgba(220, 220, 220, 1);
+    text-transform: uppercase;
+    z-index: 10;
+    mix-blend-mode: multiply;
+}
+
+div#places div#places_amount {
+    position: relative;
+    top: 120px;
+}
+
+div#places p#this {
+    position: absolute;
+    left: -9px;
+    font-size: 62px;
+    color: blue;
+    top: -60px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+div#places div#prev {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    background-color: blue;
+    top: 0px;
+}
+
+div#places p#prev {
+    position: absolute;
+    right: 0px;
+    font-size: 42px;
+    color: rgb(220, 220, 220);
+    top: -40px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+div#places div#places_names {
+    position: absolute;
+    top: 140px;
+    color: rgb(220, 220, 220);
+}
+
+
+
+/*tags*/
+
+div#tags {
+    position: relative;
+    float: left;
+    width: 250px;
+    height: 240px;
+    margin-bottom: 10px;
+
+}
+
+div#tags p#places {
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    font-weight: 800;
+    font-size: 66px;
+    color: rgba(220, 220, 220, 1);
+    text-transform: uppercase;
+    z-index: 10;
+    mix-blend-mode: multiply;
+}
+
+div#tags div#tags_amount {
+    position: relative;
+    top: 120px;
+}
+
+div#tags p#this {
+    position: absolute;
+    left: -9px;
+    font-size: 62px;
+    color: blue;
+    top: -60px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+div#tags div#prev {
+    position: absolute;
+    left: 0px;
+    width: 100%;
+    height: 3px;
+    background-color: blue;
+    top: 0px;
+}
+
+div#tags p#prev {
+    position: absolute;
+    right: 0px;
+    font-size: 42px;
+    color: rgb(220, 220, 220);
+    top: -40px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+div#tags div#tags_names {
+    position: absolute;
+    top: 140px;
+    color: rgb(220, 220, 220);
+}
+
+
+/*compare fields*/
+
+div.compare {
+    position: relative;
+    float: left;
+    width: 250px;
+    height: 180px;
+    margin-bottom: 10px;
+}
+
+p.name {
+    position: absolute;
+    left: -5px;
+    top: 24px;
+    font-weight: 800;
+    font-size: 66px;
+    color: rgba(220, 220, 220, 1);
+    text-transform: uppercase;
+    z-index: 10;
+    mix-blend-mode: multiply;
+}
+
+div.amount {
+    position: absolute;
+    top: 130px;
+    height: 3px;
+    background-color: blue;
+    width: 100%;
+}
+
+p.current {
+    position: absolute;
+    left: -9px;
+    font-size: 62px;
+    color: blue;
+    top: -60px;
+    background-color: white;
+    padding-left: 5px;
+}
+
+p.prev {
+    position: absolute;
+    right: 0px;
+    font-size: 42px;
+    color: rgb(220, 220, 220);
+    top: -40px;
+    background-color: white;
+    padding-left: 5px;
+    font-weight: 400;
+}

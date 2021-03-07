@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: "statistics-50";
+    src: url("../fonts/statistics-50.eot");
+    src: url("../fonts/statistics-50.eot?#iefix") format("embedded-opentype"),
+    url("../fonts/statistics-50.woff") format("woff"),
+    url("../fonts/statistics-50.ttf") format("truetype"),
+    url("../fonts/statistics-50.svg#statistics-50") format("svg");
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+[data-icon]:before {
+    font-family: "statistics-50" !important;
+    content: attr(data-icon);
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+    font-family: "statistics-50" !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    font-variant: normal !important;
+    text-transform: none !important;
+    speak: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-statistics-v5-24:before {
+    content: "\61";
+}
+
+.icon-statistics-v5-25:before {
+    content: "\62";
+}
+
+.icon-statistics-v5-26:before {
+    content: "\63";
+}
+
+.icon-statistics-v5-27:before {
+    content: "\64";
+}
+
+.icon-statistics-v5-28:before {
+    content: "\65";
+}
+
+.icon-statistics-v5-29:before {
+    content: "\66";
+}
+
+.icon-statistics-v5-30:before {
+    content: "\67";
+}
+
+.icon-statistics-v5-31:before {
+    content: "\68";
+}
+
+.icon-statistics-v5-32:before {
+    content: "\69";
+}
+
+.icon-statistics-v5-33:before {
+    content: "\6a";
+}
+
+.icon-statistics-v5-34:before {
+    content: "\6b";
+}
+
+.icon-statistics-v5-37:before {
+    content: "\6c";
+}
+
+.icon-statistics-v5-38:before {
+    content: "\6d";
+}
+
+.icon-statistics-v5-39:before {
+    content: "\6e";
+}
+
+.icon-statistics-v5-23:before {
+    content: "\6f";
+}
+
+.icon-statistics-v5-41-40:before {
+    content: "\70";
+}
+
+.icon-statistics-v5-41-41:before {
+    content: "\71";
+}
+
+.icon-clear-day:before {
+    content: "\72";
+}
+
+.icon-clear-night:before {
+    content: "\73";
+}
+
+.icon-rain:before {
+    content: "\74";
+}
+
+.icon-snow:before {
+    content: "\75";
+}
+
+.icon-sleet:before {
+    content: "\76";
+}
+
+.icon-wind:before {
+    content: "\77";
+}
+
+.icon-fog:before {
+    content: "\78";
+}
+
+.icon-tornadodo:before {
+    content: "\79";
+}
+
+.icon-thunderstorm:before {
+    content: "\7a";
+}
+
+.icon-hail:before {
+    content: "\41";
+}
+
+.icon-partly-cloudy-night:before {
+    content: "\42";
+}
+
+.icon-partly-cloudy-day:before {
+    content: "\43";
+}
+
+.icon-cloudy:before {
+    content: "\44";
+}
+
+.icon-statistics-v5-35:before {
+    content: "\45";
+}
+
+.icon-edit:before {
+    content: "\46";
+}
+
+.icon-delete:before {
+    content: "\47";
+}
+
+.icon-archive:before {
+    content: "\48";
+}
+
+.icon-statistics-v5-copy-57:before {
+    content: "\49";
+}
+
+.icon-statistics-v5-79:before {
+    content: "\4a";
+}
+
+.icon-statistics-v5-80:before {
+    content: "\4b";
+}
+
+.icon-statistics-v5-81:before {
+    content: "\4c";
+}

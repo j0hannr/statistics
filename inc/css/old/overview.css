@@ -1,0 +1,288 @@
+html, body {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+    overflow-x: hidden;
+    background: white
+}
+
+/*general*/
+
+section {
+    position: relative;
+    left: 0;
+    width: 100%;
+    float: left;
+}
+
+/*custom*/
+
+/*header*/
+
+h1 {
+    text-align: center;
+    font-size: 60px;
+    font-weight: normal;
+    color: #004881;
+}
+
+/*location*/
+
+div.location {
+    position: relative;
+    top: 0;
+    float: left;
+    height: 300px;
+    width: 40%;
+    /*background-color: #e6e6e6;*/
+    /*border: 10px solid #e6e6e6;*/
+    margin: 40px;
+    /*overflow: hidden;*/
+}
+
+p.name {
+    position: relative;
+    top: -70px;
+    font-size: 100px;
+    color: #004881;
+}
+
+p.days {
+    position: relative;
+    top: -290px;
+    text-align: center;
+    font-size: 100px;
+    color: #00dc93;
+    font-weight: bold;
+}
+
+p#daysoverview {
+    position: absolute;
+    right: 25px;
+    bottom: 0px;
+    color: #004881;
+    font-size: 22px;
+    text-transform: uppercase;
+}
+
+/*tag*/
+
+section#tag {
+    background-color: #4cffc4;
+    padding-bottom: 80px;
+    padding-top: 80px;
+    min-height: 200px;
+}
+
+p.top {
+    font-size: 70px;
+    color: #004881;
+    position: relative;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0px;
+    margin: 10px;
+    text-align: center;
+    word-spacing: 50px;
+    z-index: 10;
+    font-weight: bold;
+    /*text-transform: uppercase;*/
+}
+
+
+p.bottom {
+    font-size: 20px;
+    line-height: 40px;
+    word-spacing: 15px;
+    text-align: justify;
+    /*color: white;*/
+    position: absolute;
+    top: 0px;
+    float: left;
+    margin: 10px;
+    color: #0074ce;
+    color: #4cffc4;
+    /*color: white;*/
+}
+
+.tag:active + .bottom {
+    color: white;
+}
+
+p.bottom:active {
+    color: white;
+}
+
+.top:active + .bottom {
+    color: white;
+}
+
+p#totaltags {
+    position: absolute;
+    right: 25px;
+    bottom: 0px;
+    color: white;
+    font-size: 22px;
+}
+
+/*words*/
+
+section#text {
+    background-color: #00dc93;
+    height: 400px;
+    padding-top: 60px;
+}
+
+p#number {
+    font-size: 100px;
+    font-weight: normal;
+    color: #004881;
+    text-align: center;
+    position: relative;
+    top: -220px;
+    left: 90px;
+}
+
+
+p#word {
+    font-size: 100px;
+    text-align: center;
+    font-weight: bold;
+    color: #00b6ec;
+}
+
+/*field*/
+
+div.field {
+    position: relative;
+    top: 0;
+    width: 100%;
+    float: left;
+    padding-top: 60px;
+    height: 400px;
+}
+
+p.fieldname {
+    font-size: 100px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+p.fieldamount {
+    font-size: 100px;
+    text-align: center;
+    position: relative;
+    top: -220px;
+    font-weight: normal;
+    left: 90px;
+}
+
+p.fieldamountbefore {
+    font-size: 100px;
+    text-align: center;
+    position: relative;
+    top: -220px;
+    font-weight: normal;
+    left: 90px;
+    display: none;
+}
+
+/*month before*/
+
+p.monthbefore {
+    position: relative;
+    top: -190px;
+    text-align: right;
+    right: 25px;
+    color: Black;
+    font-size: 22px;
+    text-transform: uppercase;
+    display: none;
+}
+
+/*change to month before*/
+.field:active {
+    background-color: #d4d4d4;
+}
+
+.field:active .fieldamount {
+    display: none;
+}
+
+.field:active .fieldname {
+    color: #8b8b8b;
+}
+
+.field:active .fieldamountbefore {
+    display: block;
+    color: black;
+}
+
+.field:active .monthbefore {
+    display: block;
+}
+
+/*colors*/
+div.one {
+    background-color: #00b6ec;
+}
+
+div.two {
+    background-color: #0074ce;
+}
+
+div.three {
+    background-color: #00dc93;
+}
+
+div.one p.fieldname {
+    color: #0074ce;
+}
+
+div.two p.fieldname {
+    color: #00dc93;
+}
+
+div.three p.fieldname {
+    color: #00b6ec;
+}
+
+div.one p.fieldamount {
+    color: #004881;
+}
+
+div.two p.fieldamount {
+    color: #004881;
+}
+
+div.three p.fieldamount {
+    color: #004881;
+}
+
+
+/*footer*/
+
+section#footer {
+    background-color: #004881;
+    padding-bottom: 10px;
+}
+
+p#visits {
+    position: relative;
+    text-align: right;
+    top: 10px;
+    right: 20px;
+    font-size: 22px;
+    color: white;
+}
+
+
+
+
+
+
