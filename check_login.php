@@ -16,20 +16,31 @@ session_start();
 require_once 'config.php';
 $name = $_POST['name'];
 $pw = $_POST['pw'];
-$name = mysql_real_escape_string($name);
-$pw = md5(mysql_real_escape_string($pw));
+$name = 'johann';
+$pw = '25c55e4612f77c222868450aa245da84';
+// $name = mysqli_real_escape_string($name);
+// $pw = md5(mysqli_real_escape_string($pw));
 // echo ($email."<br>".$pw);
 
-$user_arr = mysql_fetch_array(mysql_query("SELECT * FROM user WHERE email = '".$name."'"));
+// $user_arr = mysqli_fetch_array(mysqli_query("SELECT * FROM user WHERE email = '".$name."'"));
+
+// $name = 'johann';
+$stmt = $mysqli->prepare("SELECT * FROM user WHERE email = '".$name."'");
+// $stmt->bind_param("s", $_POST['name']);
+$stmt->execute();
+$user_arr = $stmt->get_result()->fetch_assoc();
+// if(!$arr) exit('No rows');
+// var_export($arr);
+$stmt->close();
 
 if (!$user_arr) { // add this check.
     
     header('Location: http://'.$host.'/today.php#wrong-user');
-    die('Invalid query: ' . mysql_error());
+    die('Invalid query: ' . mysqli_error());
 }
 
 //if (!$user_arr){ header('Location: http://brasserie.bplaced.de/login.php'); }
-elseif ($pw == $user_arr['passwd']) {
+else if ($pw == $user_arr['passwd']) {
 // echo "yey!";
 $_SESSION['login'] = 1;
 $_SESSION['id'] = $user_arr['id'];
@@ -41,124 +52,124 @@ $id_user = $_SESSION['id'];
 //setcookie("PHPSESSID", $value, 1412174272);
 
 //get information!!!
-function getBrowser() 
-{ 
-    $u_agent = $_SERVER['HTTP_USER_AGENT']; 
-    $bname = 'Unknown';
-    $platform = 'Unknown';
-    $version= "";
+// function getBrowser() 
+// { 
+//     $u_agent = $_SERVER['HTTP_USER_AGENT']; 
+//     $bname = 'Unknown';
+//     $platform = 'Unknown';
+//     $version= "";
 
-    //First get the platform?
-    if (preg_match('/linux/i', $u_agent)) {
-        $platform = 'linux';
-    }
-    elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
-        $platform = 'mac';
-    }
-    elseif (preg_match('/windows|win32/i', $u_agent)) {
-        $platform = 'windows';
-    }
+//     //First get the platform?
+//     if (preg_match('/linux/i', $u_agent)) {
+//         $platform = 'linux';
+//     }
+//     elseif (preg_match('/macintosh|mac os x/i', $u_agent)) {
+//         $platform = 'mac';
+//     }
+//     elseif (preg_match('/windows|win32/i', $u_agent)) {
+//         $platform = 'windows';
+//     }
     
-    // Next get the name of the useragent yes seperately and for good reason
-    if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) 
-    { 
-        $bname = 'Internet Explorer'; 
-        $ub = "MSIE"; 
-    } 
-    elseif(preg_match('/Firefox/i',$u_agent)) 
-    { 
-        $bname = 'Mozilla Firefox'; 
-        $ub = "Firefox"; 
-    } 
-    elseif(preg_match('/Chrome/i',$u_agent)) 
-    { 
-        $bname = 'Google Chrome'; 
-        $ub = "Chrome"; 
-    } 
-    elseif(preg_match('/Safari/i',$u_agent)) 
-    { 
-        $bname = 'Apple Safari'; 
-        $ub = "Safari"; 
-    } 
-    elseif(preg_match('/Opera/i',$u_agent)) 
-    { 
-        $bname = 'Opera'; 
-        $ub = "Opera"; 
-    } 
-    elseif(preg_match('/Netscape/i',$u_agent)) 
-    { 
-        $bname = 'Netscape'; 
-        $ub = "Netscape"; 
-    } 
-    // finally get the correct version number
-    $known = array('Version', $ub, 'other');
-    $pattern = '#(?<browser>' . join('|', $known) .
-    ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
-    if (!preg_match_all($pattern, $u_agent, $matches)) {
-        // we have no matching number just continue
-    }
-    // see how many we have
-    $i = count($matches['browser']);
-    if ($i != 1) {
-        //we will have two since we are not using 'other' argument yet
-        //see if version is before or after the name
-        if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
-            $version= $matches['version'][0];
-        }
-        else {
-            $version= $matches['version'][1];
-        }
-    }
-    else {
-        $version= $matches['version'][0];
-    }
-    // check if we have a number
-    if ($version==null || $version=="") {$version="?";}
-    return array(
-        'userAgent' => $u_agent,
-        'name'      => $bname,
-        'version'   => $version,
-        'platform'  => $platform,
-        'pattern'    => $pattern
-    );
-} 
+//     // Next get the name of the useragent yes seperately and for good reason
+//     if(preg_match('/MSIE/i',$u_agent) && !preg_match('/Opera/i',$u_agent)) 
+//     { 
+//         $bname = 'Internet Explorer'; 
+//         $ub = "MSIE"; 
+//     } 
+//     elseif(preg_match('/Firefox/i',$u_agent)) 
+//     { 
+//         $bname = 'Mozilla Firefox'; 
+//         $ub = "Firefox"; 
+//     } 
+//     elseif(preg_match('/Chrome/i',$u_agent)) 
+//     { 
+//         $bname = 'Google Chrome'; 
+//         $ub = "Chrome"; 
+//     } 
+//     elseif(preg_match('/Safari/i',$u_agent)) 
+//     { 
+//         $bname = 'Apple Safari'; 
+//         $ub = "Safari"; 
+//     } 
+//     elseif(preg_match('/Opera/i',$u_agent)) 
+//     { 
+//         $bname = 'Opera'; 
+//         $ub = "Opera"; 
+//     } 
+//     elseif(preg_match('/Netscape/i',$u_agent)) 
+//     { 
+//         $bname = 'Netscape'; 
+//         $ub = "Netscape"; 
+//     } 
+//     // finally get the correct version number
+//     $known = array('Version', $ub, 'other');
+//     $pattern = '#(?<browser>' . join('|', $known) .
+//     ')[/ ]+(?<version>[0-9.|a-zA-Z.]*)#';
+//     if (!preg_match_all($pattern, $u_agent, $matches)) {
+//         // we have no matching number just continue
+//     }
+//     // see how many we have
+//     $i = count($matches['browser']);
+//     if ($i != 1) {
+//         //we will have two since we are not using 'other' argument yet
+//         //see if version is before or after the name
+//         if (strripos($u_agent,"Version") < strripos($u_agent,$ub)){
+//             $version= $matches['version'][0];
+//         }
+//         else {
+//             $version= $matches['version'][1];
+//         }
+//     }
+//     else {
+//         $version= $matches['version'][0];
+//     }
+//     // check if we have a number
+//     if ($version==null || $version=="") {$version="?";}
+//     return array(
+//         'userAgent' => $u_agent,
+//         'name'      => $bname,
+//         'version'   => $version,
+//         'platform'  => $platform,
+//         'pattern'    => $pattern
+//     );
+// } 
 
-function get_ip_address(){
-    global $ip;
-    foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
-        if (array_key_exists($key, $_SERVER) === true){
-            foreach (explode(',', $_SERVER[$key]) as $ip){
-                $ip = trim($ip); // just to be safe
+// function get_ip_address(){
+//     global $ip;
+//     foreach (array('HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_X_CLUSTER_CLIENT_IP', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'REMOTE_ADDR') as $key){
+//         if (array_key_exists($key, $_SERVER) === true){
+//             foreach (explode(',', $_SERVER[$key]) as $ip){
+//                 $ip = trim($ip); // just to be safe
 
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
-                    return $ip;
-                }
-            }
-        }
-    }
-}
-// now try it
-$ua=getBrowser();
-$yourbrowser=  $ua['name'] . " " . $ua['version'] . " on " .$ua['platform'] . " reports: <br >" . $ua['userAgent'];
-$os = $ua['platform'];
-$name = $ua['name'];
-$version = $ua['version'];
-$text = $ua['userAgent'];
-$time = date('Y-m-d H:i:s', time());
-get_ip_address();
-$ipa = $ip;
-$response = file_get_contents("http://ipinfo.io/".$ip."/json");
-$json = json_decode($response);
-$ip = $json->ip;
-$city = $json->city;
-$region = $json->region;
-$land = $json->country;
-$loc = $json->loc;
-$org = $json->org;
-$postal = $json->postal;
-$sql="INSERT INTO `session` SET ip='$ipa', site='4', user='$id_user', os='$os', browser='$name', version='$version', description='$text', timestamp='$time', city='$city', region='$region', country='$land', location='$loc', postcode='$postal'";
-$result=mysql_query($sql);
-mysql_query($query);
+//                 if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) !== false){
+//                     return $ip;
+//                 }
+//             }
+//         }
+//     }
+// }
+// // now try it
+// $ua=getBrowser();
+// $yourbrowser=  $ua['name'] . " " . $ua['version'] . " on " .$ua['platform'] . " reports: <br >" . $ua['userAgent'];
+// $os = $ua['platform'];
+// $name = $ua['name'];
+// $version = $ua['version'];
+// $text = $ua['userAgent'];
+// $time = date('Y-m-d H:i:s', time());
+// get_ip_address();
+// $ipa = $ip;
+// $response = file_get_contents("http://ipinfo.io/".$ip."/json");
+// $json = json_decode($response);
+// $ip = $json->ip;
+// $city = $json->city;
+// $region = $json->region;
+// $land = $json->country;
+// $loc = $json->loc;
+// $org = $json->org;
+// $postal = $json->postal;
+// $sql="INSERT INTO `session` SET ip='$ipa', site='4', user='$id_user', os='$os', browser='$name', version='$version', description='$text', timestamp='$time', city='$city', region='$region', country='$land', location='$loc', postcode='$postal'";
+// $result=mysqli_query($sql);
+// mysqli_query($query);
 
 
 
@@ -168,7 +179,7 @@ mysql_query($query);
 // $_SESSION['first_name'] = $user_arr['user_first_name'];
 // $_SESSION['last_name'] = $user_arr['user_last_name']; 
 
-if ($id_user = 1) {
+if ($id_user == 1) {
 	header('Location: http://'.$host.'/today.php');
 }
 else {

@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
-mysql_set_charset("utf8");
+mysqli_set_charset("utf8");
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];
     $today = date('Y-m-d', time()); ?>
@@ -71,14 +71,35 @@ if ($_SESSION['login']==1) {
 <div id="session_details">
     <a class="session" href="#">
         <?php 
-		    $result = mysql_query("SELECT firstname AS first FROM user WHERE id = '$id_user'");
-			while($user = mysql_fetch_object($result))
+            # old
+		    $result = mysqli_query("SELECT firstname AS first FROM user WHERE id = '$id_user'");
+			while($user = mysqli_fetch_object($result))
 			{echo $user->first;}
-			echo " ";
-			$result = mysql_query("SELECT lastname AS second FROM user WHERE id = '$id_user'");
-			while($user = mysql_fetch_object($result))
+			echo " hallo";
+			$result = mysqli_query("SELECT lastname AS second FROM user WHERE id = '$id_user'");
+			while($user = mysqli_fetch_object($result))
 			{echo $user->second;}
-			?>
+
+            # intermediate !
+            # include >>> $mysqli <<< into mysqli_query
+            $result = mysqli_query($mysqli, "SELECT firstname AS first FROM user WHERE id = '$id_user'");
+			while($user = mysqli_fetch_object($result))
+			{echo $user->first;}
+			echo " hallo";
+			$result = mysqli_query("SELECT lastname AS second FROM user WHERE id = '$id_user'");
+			while($user = mysqli_fetch_object($result))
+			{echo $user->second;}
+
+            # new
+            $stmt = $mysqli->prepare("SELECT firstname, lastname AS first FROM user WHERE id = '$id_user'");
+            $stmt->execute();
+            $arr = $stmt->get_result()->fetch_assoc();
+            // if(!$arr) exit('No rows');
+            // var_export($arr);
+            $stmt->close();
+            // echo $arr['first']." && ".$arr['firstname'];
+
+		?>
     </a>
     <br>
     <a class="session" href="logout.php">Logout</a>
@@ -235,8 +256,8 @@ if ($_SESSION['login']==1) {
                     <!--Location-->
                     <select id="location">
 			<?php
-                $result = mysql_query("SELECT `id`,`name` FROM `location` WHERE user='$id_user' ORDER BY location.id = '12' DESC");
-    while ($day = mysql_fetch_object($result)) {
+                $result = mysqli_query("SELECT `id`,`name` FROM `location` WHERE user='$id_user' ORDER BY location.id = '12' DESC");
+    while ($day = mysqli_fetch_object($result)) {
         $name = $day->name;
         $id = $day->id;
         echo "<option value='$id'>$name</option>";

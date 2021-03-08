@@ -1,6 +1,6 @@
 -- Create syntax for 'dayview'
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `dayview`
+CREATE VIEW `dayview`
 AS SELECT
    `statistics`.`entry`.`user` AS `user`,
    `statistics`.`entry`.`entry` AS `entry`,
