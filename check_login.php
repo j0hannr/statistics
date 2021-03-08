@@ -16,22 +16,22 @@ session_start();
 require_once 'config.php';
 $name = $_POST['name'];
 $pw = $_POST['pw'];
-$name = 'johann';
-$pw = '25c55e4612f77c222868450aa245da84';
-// $name = mysqli_real_escape_string($name);
-// $pw = md5(mysqli_real_escape_string($pw));
+// $name = 'johann';
+// $pw = '25c55e4612f77c222868450aa245da84';
+$name = $mysqli->real_escape_string($name);
+$pw = md5($mysqli->real_escape_string($pw));
 // echo ($email."<br>".$pw);
 
-// $user_arr = mysqli_fetch_array(mysqli_query("SELECT * FROM user WHERE email = '".$name."'"));
+$user_arr = mysqli_fetch_array(mysqli_query($mysqli, "SELECT * FROM user WHERE email = '".$name."'"));
 
 // $name = 'johann';
-$stmt = $mysqli->prepare("SELECT * FROM user WHERE email = '".$name."'");
-// $stmt->bind_param("s", $_POST['name']);
-$stmt->execute();
-$user_arr = $stmt->get_result()->fetch_assoc();
-// if(!$arr) exit('No rows');
-// var_export($arr);
-$stmt->close();
+// $stmt = $mysqli->prepare("SELECT * FROM user WHERE email = '".$name."'");
+// // $stmt->bind_param("s", $_POST['name']);
+// $stmt->execute();
+// $user_arr = $stmt->get_result()->fetch_assoc();
+// // if(!$arr) exit('No rows');
+// // var_export($arr);
+// $stmt->close();
 
 if (!$user_arr) { // add this check.
     

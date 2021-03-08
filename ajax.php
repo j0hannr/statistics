@@ -1,9 +1,8 @@
 <?php
-
+session_start();
 require "config.php";
 $time = date('Y-m-d H:i:s', time());
 $timestamp = date('Y-m-d H:i:s', time());
-session_start();
 $id_user = $_SESSION['id'];
 
 if (empty($id_user)) {
@@ -20,12 +19,12 @@ $action = $_REQUEST['action'];
 			//$user = $_REQUEST['user'];
 			$date = $_REQUEST['date'];
 			$value = $_REQUEST['value'];
-			//$user = mysql_real_escape_string($user);
-			$date = mysql_real_escape_string($date);
-			$value = mysql_real_escape_string($value);
-			mysql_set_charset("utf8");
-			mysql_query("INSERT INTO `tags` (`name`, `entry`, `timestamp`, `user`) VALUES ('$value','$date','$timestamp','$id_user')");
-			$id = mysql_insert_id();
+			//$user = $mysqli->real_escape_string($user);
+			$date = $mysqli->real_escape_string($date);
+			$value = $mysqli->real_escape_string($value);
+			mysqli_set_charset($mysqli, "utf8");
+			mysqli_query($mysqli,"INSERT INTO `tags` (`name`, `entry`, `timestamp`, `user`) VALUES ('$value','$date','$timestamp','$id_user')");
+			$id = mysqli_insert_id($mysqli);
 			if ($id == '0') { echo "error";} else {
 			// echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<img src='inc/img/delete_2.png' class='remove' id='delete'/></span>";
 			echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<div class='remove' id='delete'><div data-icon='q' class='icon'></div></div></span>";
@@ -35,16 +34,16 @@ $action = $_REQUEST['action'];
 
 		case "delete":
 			$id = $_REQUEST['id'];
-			mysql_query("DELETE FROM `tags` WHERE id=".$id);
+			mysqli_query($mysqli,"DELETE FROM `tags` WHERE id=".$id);
 			echo "DONE!";
 		break;
 
 		case "get":
 
 			$day = $_REQUEST['day'];
-            mysql_set_charset("utf8");
-			$re = mysql_query("SELECT `name`,`id` FROM `tags` WHERE `entry` =".$day);
-			while($tag = mysql_fetch_object($re))
+            mysqli_set_charset($mysqli, "utf8");
+			$re = mysqli_query($mysqli,"SELECT `name`,`id` FROM `tags` WHERE `entry` =".$day);
+			while($tag = mysqli_fetch_object($re))
 			{
 			    $name = $tag->name;
 			    $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
@@ -58,16 +57,16 @@ $action = $_REQUEST['action'];
 		case "changevalue":
 
 			$id = $_REQUEST['id'];
-			$id = mysql_real_escape_string($id);
+			$id = $mysqli->real_escape_string($id);
 			$value = $_REQUEST['value'];
-			$value = mysql_real_escape_string($value);
+			$value = $mysqli->real_escape_string($value);
 			$entry = $_REQUEST['entry'];
-			$entry = mysql_real_escape_string($entry);
+			$entry = $mysqli->real_escape_string($entry);
 
 		$sql="UPDATE `field` SET value='$value', timestamp='$timestamp' WHERE id = '$id'";
 
-		$result=mysql_query($sql);
-		mysql_query($result);
+		$result=mysqli_query($mysqli,$sql);
+		mysqli_query($mysqli,$result);
 		echo $value;
 		echo "<br>";
 		echo $id;
@@ -77,14 +76,14 @@ $action = $_REQUEST['action'];
 		case "addfield":
 
 			$id = $_REQUEST['id'];
-			$id = mysql_real_escape_string($id);
+			$id = $mysqli->real_escape_string($id);
 			$value = $_REQUEST['value'];
-			$value = mysql_real_escape_string($value);
+			$value = $mysqli->real_escape_string($value);
 			$entry = $_REQUEST['entry'];
-			$entry = mysql_real_escape_string($entry);
+			$entry = $mysqli->real_escape_string($entry);
 
-			mysql_query("INSERT INTO `field` (`field`, `value`, `entry` ,`user`, `timestamp`) VALUES ('$id','$value','$entry','$id_user', '$timestamp')");
-			$id = mysql_insert_id();
+			mysqli_query($mysqli,"INSERT INTO `field` (`field`, `value`, `entry` ,`user`, `timestamp`) VALUES ('$id','$value','$entry','$id_user', '$timestamp')");
+			$id = mysqli_insert_id($mysqli);
 			echo $id;
 
 		break;
@@ -93,21 +92,21 @@ $action = $_REQUEST['action'];
 
 
 			$id = $_REQUEST['id'];
-			$id = mysql_real_escape_string($id);
+			$id = $mysqli->real_escape_string($id);
 			$entry = $_REQUEST['entry'];
-			$entry = mysql_real_escape_string($entry);
+			$entry = $mysqli->real_escape_string($entry);
 			$date = $_REQUEST['date'];
-			$date = mysql_real_escape_string($date);
+			$date = $mysqli->real_escape_string($date);
 
 			$sql="UPDATE `entry` SET location='$id' WHERE entry = '$entry'";
 
-			$result=mysql_query($sql);
-			mysql_query($result);
+			$result=mysqli_query($mysqli,$sql);
+			mysqli_query($mysqli,$result);
 			//echo $value;
 
 
 			//get weather...
-			$result = mysql_query("SELECT `latitude`,`longitude` FROM `location` WHERE `id`='$id' LIMIT 0,1");
+			$result = mysqli_query($mysqli,"SELECT `latitude`,`longitude` FROM `location` WHERE `id`='$id' LIMIT 0,1");
 			$row = mysql_fetch_row($result);
 
 			$lat = $row[0];
@@ -189,8 +188,8 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
             
             
 
-			$res=mysql_query($sqlocation);
-			mysql_query($res);
+			$res=mysqli_query($mysqli,$sqlocation);
+			mysqli_query($mysqli,$res);
             
 			echo $sqlocation;
 //            echo "https://api.forecast.io/forecast/6eb4fa0c45ddd060b1fed610f3efc173/".$lat.",".$lng.",".$timestamps."";
@@ -208,96 +207,111 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		case "updatetext":
 
 			$kind = $_REQUEST['kind'];
-			$kind = mysql_real_escape_string($kind);
+			$kind = $mysqli->real_escape_string($kind);
 			$entry = $_REQUEST['entry'];
-			$entry = mysql_real_escape_string($entry);
+			$entry = $mysqli->real_escape_string($entry);
 			$text = $_REQUEST['text'];
-			$text = mysql_real_escape_string($text);
-			mysql_set_charset("utf8");
+			$text = $mysqli->real_escape_string($text);
+			mysqli_set_charset($mysqli, "utf8");
 			$sql="UPDATE `entry` SET $kind='$text' WHERE entry = '$entry'";
-			$result=mysql_query($sql);
-			mysql_query($result);
+			$result=mysqli_query($mysqli,$sql);
+			mysqli_query($mysqli,$result);
 			echo $sql;
 		break;
 		//add date if there is none
 		case "addday":
 
 			$date = $_REQUEST['date'];
-			$date = mysql_real_escape_string($date);
+			$date = $mysqli->real_escape_string($date);
 			$location = $_REQUEST['location'];
-			$location = mysql_real_escape_string($location);
+			$location = $mysqli->real_escape_string($location);
             
 //            echo $date;
 //            echo $location;
 
 			//get weather...
-			$result = mysql_query("SELECT `latitude`,`longitude` FROM `location` WHERE `id`='$location' LIMIT 0,1");
-			$row = mysql_fetch_row($result);
+			// $result = mysqli_query($mysqli,"SELECT `latitude`,`longitude` FROM `location` WHERE `id`='$location' LIMIT 0,1");
+			// $row = mysql_fetch_row($result);
 
-			$lat = $row[0];
-			$lng = $row[1];
+			// $lat = $row[0];
+			// $lng = $row[1];
 
 			$timestamps = strtotime($date);
             
 //            echo $timestamps;
 
-			$response = file_get_contents("https://api.forecast.io/forecast/6eb4fa0c45ddd060b1fed610f3efc173/".$lat.",".$lng.",".$timestamps."");
-			$json = json_decode($response);
+			// $response = file_get_contents("https://api.forecast.io/forecast/6eb4fa0c45ddd060b1fed610f3efc173/".$lat.",".$lng.",".$timestamps."");
+			// $json = json_decode($response);
             
 
-			$summary = $json->daily->data[0]->summary;
-			$status = $json->daily->data[0]->icon;
-			$json->daily->data[0]->sunriseTime;
-			$time=$json->daily->data[0]->sunriseTime;
-			$rise = gmdate("H:i:s", $time);
-			$json->daily->data[0]->sunsetTime;
-			$time=$json->daily->data[0]->sunsetTime;
-			$fall = gmdate("H:i:s", $time);
-			$phase = $json->daily->data[0]->moonPhase;
-			$fahr = $json->daily->data[0]->temperatureMin;
-			$temperature = $fahr - 32;
-			$temperatureMin = $temperature / 1.8;
-			$tempMin = round($temperatureMin,2);
-			$fahr = $json->daily->data[0]->temperatureMax;
-			$temperature = $fahr - 32;
-			$temperatureMax = $temperature / 1.8;
-			$tempMax = round($temperatureMax,1);
-			$temave = $temperatureMax + $temperatureMin;
-			$temave = $temave / 2;
-			$tempAvg = round($temave,1);
-			$humidity = $json->daily->data[0]->humidity;
-			$wind = $json->daily->data[0]->windSpeed;
-			$speed = $wind * 1.609344;
-			$speed = round($speed,1);
-			$cloud = $json->daily->data[0]->cloudCover;
-			$precip_type = $json->daily->data[0]->precipType;
+			// $summary = $json->daily->data[0]->summary;
+			// $status = $json->daily->data[0]->icon;
+			// $json->daily->data[0]->sunriseTime;
+			// $time=$json->daily->data[0]->sunriseTime;
+			// $rise = gmdate("H:i:s", $time);
+			// $json->daily->data[0]->sunsetTime;
+			// $time=$json->daily->data[0]->sunsetTime;
+			// $fall = gmdate("H:i:s", $time);
+			// $phase = $json->daily->data[0]->moonPhase;
+			// $fahr = $json->daily->data[0]->temperatureMin;
+			// $temperature = $fahr - 32;
+			// $temperatureMin = $temperature / 1.8;
+			// $tempMin = round($temperatureMin,2);
+			// $fahr = $json->daily->data[0]->temperatureMax;
+			// $temperature = $fahr - 32;
+			// $temperatureMax = $temperature / 1.8;
+			// $tempMax = round($temperatureMax,1);
+			// $temave = $temperatureMax + $temperatureMin;
+			// $temave = $temave / 2;
+			// $tempAvg = round($temave,1);
+			// $humidity = $json->daily->data[0]->humidity;
+			// $wind = $json->daily->data[0]->windSpeed;
+			// $speed = $wind * 1.609344;
+			// $speed = round($speed,1);
+			// $cloud = $json->daily->data[0]->cloudCover;
+			// $precip_type = $json->daily->data[0]->precipType;
 
-			$tempMintime = $json->daily->data[0]->temperatureMinTime;
-			$tempMaxtime = $json->daily->data[0]->temperatureMaxTime;
-			$dewpoint = $json->daily->data[0]->dewPoint;
-			$pressure = $json->daily->data[0]->pressure;
-			$ozone = $json->daily->data[0]->ozone;
-			$precip_chance = $json->daily->data[0]->precipProbability;
-			$precip_amount = $json->daily->data[0]->precipIntensity;
-			$precipMax = $json->daily->data[0]->precipIntensityMax;
-			$precipMaxTime = $json->daily->data[0]->precipIntensityMaxTime;
+			// $tempMintime = $json->daily->data[0]->temperatureMinTime;
+			// $tempMaxtime = $json->daily->data[0]->temperatureMaxTime;
+			// $dewpoint = $json->daily->data[0]->dewPoint;
+			// $pressure = $json->daily->data[0]->pressure;
+			// $ozone = $json->daily->data[0]->ozone;
+			// $precip_chance = $json->daily->data[0]->precipProbability;
+			// $precip_amount = $json->daily->data[0]->precipIntensity;
+			// $precipMax = $json->daily->data[0]->precipIntensityMax;
+			// $precipMaxTime = $json->daily->data[0]->precipIntensityMaxTime;
 
-			$timezone = $json->timezone;
+			// $timezone = $json->timezone;
 
-			$zone = file_get_contents("http://api.timezonedb.com/v2/get-time-zone?key=ID4BUSN1BUBV&format=json&by=zone&zone=".$timezone."");
-			$zone_2 = json_decode($zone);
-			$gmt = $zone_2->gmtOffset;
+			// $zone = file_get_contents("http://api.timezonedb.com/v2/get-time-zone?key=ID4BUSN1BUBV&format=json&by=zone&zone=".$timezone."");
+			// $zone_2 = json_decode($zone);
+			// $gmt = $zone_2->gmtOffset;
 
-
-			mysql_query("INSERT INTO `entry` (user, day, location, timestamp, milestone, story, quote) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
-
-			$id = mysql_insert_id();
+			// $id_user = "1";
+			// $date = "2021-03-08";
+			
+			# when location not given -> preselect
+			if (!$Location) {
+				$location = "1";
+			}
+			// $timestamps = strtotime($date);
+			mysqli_query($mysqli,"INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
+			$id = mysqli_insert_id($mysqli);
 			echo $id;
 
-			$sql="INSERT INTO `location_day` (user, entry, location, timestamp, text, status, sunrise, sunset, moonphase, tempMin, tempMax, tempAvg, humidity, windspeed, cloudcover, precip, dewpoint, pressure, ozone, tempMintime, tempMaxtime, precipMax, precipMaxtime, timezone, GMT_offset) VALUES ('$id_user','$id','$location','$timestamp', '$summary', '$status', '$rise', '$fall', '$phase', '$tempMin', '$tempMax', '$tempAvg', '$humidity', '$speed', '$cloud', '$precip_type', '$dewpoint', '$pressure', '$ozone', '$tempMintime', '$tempMaxtime', '$precipMax', '$precipMaxTime', '$timezone', '$gmt')";
+			// echo 16774;
 
-			$result=mysql_query($sql);
-			mysql_query($result);
+			// $stmt = $mysqli->prepare("INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
+			// // $stmt->bind_param("si", $_POST['name'], $_SESSION['id']);
+			// $stmt->execute();
+			// echo $mysqli->insert_id;
+			// $stmt->close();
+			
+
+			// $sql="INSERT INTO `location_day` (user, entry, location, timestamp, text, status, sunrise, sunset, moonphase, tempMin, tempMax, tempAvg, humidity, windspeed, cloudcover, precip, dewpoint, pressure, ozone, tempMintime, tempMaxtime, precipMax, precipMaxtime, timezone, GMT_offset) VALUES ('$id_user','$id','$location','$timestamp', '$summary', '$status', '$rise', '$fall', '$phase', '$tempMin', '$tempMax', '$tempAvg', '$humidity', '$speed', '$cloud', '$precip_type', '$dewpoint', '$pressure', '$ozone', '$tempMintime', '$tempMaxtime', '$precipMax', '$precipMaxTime', '$timezone', '$gmt')";
+
+			// $result=mysqli_query($mysqli,$sql);
+			// mysqli_query($mysqli,$result);
 
 		break;
 
@@ -305,11 +319,11 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		case "track":
 
 			$width = $_REQUEST['width'];
-			$width = mysql_real_escape_string($width);
+			$width = $mysqli->real_escape_string($width);
 			$height = $_REQUEST['height'];
-			$height = mysql_real_escape_string($height);
+			$height = $mysqli->real_escape_string($height);
 			$site = $_REQUEST['site'];
-			$site = mysql_real_escape_string($site);
+			$site = $mysqli->real_escape_string($site);
 
 			//get information!!!
 			function getBrowser()
@@ -423,16 +437,16 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$loc = $json->loc;
 			$org = $json->org;
 			$postal = $json->postal;
-			$postal = mysql_real_escape_string($postal);
-			$city = mysql_real_escape_string($city);
+			$postal = $mysqli->real_escape_string($postal);
+			$city = $mysqli->real_escape_string($city);
 			echo $ip;
 			echo "//";
 			echo $org;
 			echo "//";
 			echo $postal;
 			$sql="INSERT INTO `session` SET ip='$ipa', site='$site', user='$id_user', os='$os', browser='$name', version='$version', description='$text', timestamp='$time', city='$city', region='$region', country='$land', location='$loc', postcode='$postal', provider='$org', width='$width', height='$height'";
-			$result=mysql_query($sql);
-			mysql_query($query);
+			$result=mysqli_query($mysqli,$sql);
+			mysqli_query($mysqli,$query);
 
 
 		break;
@@ -442,13 +456,13 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		//todo
 		case "true":
 			$id = $_REQUEST['id'];
-			mysql_query("UPDATE todo SET check_value='false', check_date='$time' WHERE id=".$id);
+			mysqli_query($mysqli,"UPDATE todo SET check_value='false', check_date='$time' WHERE id=".$id);
 			echo "<img class='check false' src='inc/img/false.png'/>";
 		break;
 
 		case "false":
 			$id = $_REQUEST['id'];
-			mysql_query("UPDATE todo SET check_value='true', check_date='$time' WHERE id=".$id);
+			mysqli_query($mysqli,"UPDATE todo SET check_value='true', check_date='$time' WHERE id=".$id);
 			echo "<img class='check true' src='inc/img/true.png'/>";
 		break;
 
@@ -456,26 +470,26 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			
 			$id = $_REQUEST['id'];
 			$text = $_REQUEST['text'];
-			$text = mysql_real_escape_string($text);
-            mysql_set_charset("utf8");
+			$text = $mysqli->real_escape_string($text);
+            mysqli_set_charset($mysqli, "utf8");
 			$kind = $_REQUEST['kind'];
-			mysql_query("UPDATE $kind SET text='$text' WHERE id=".$id);
+			mysqli_query($mysqli,"UPDATE $kind SET text='$text' WHERE id=".$id);
 //          $text = htmlentities($text, ENT_QUOTES);
 //			echo $text;
-//            mysql_set_charset("utf8");
+//            mysqli_set_charset($mysqli, "utf8");
 			//echo $id;
 			//echo $kind;
 		break;
 
 
 		case "archivecategory":
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$status = $_REQUEST['status'];
-			$status = mysql_real_escape_string($status);
+			$status = $mysqli->real_escape_string($status);
 			//$text = $_REQUEST['text'];
-			//$text = mysql_real_escape_string($text);
-			mysql_query("UPDATE category SET archive='$status' WHERE id=".$id);
+			//$text = $mysqli->real_escape_string($text);
+			mysqli_query($mysqli,"UPDATE category SET archive='$status' WHERE id=".$id);
 			echo "UPDATE category SET archive='$status' WHERE id=".$id;
 			//echo $text;
 			//echo $id;
@@ -483,13 +497,13 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		break;
             
         case "deletecategory":
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 //			$status = $_REQUEST['status'];
-//			$status = mysql_real_escape_string($status);
+//			$status = $mysqli->real_escape_string($status);
 			//$text = $_REQUEST['text'];
-			//$text = mysql_real_escape_string($text);
-			mysql_query("Delete from category WHERE id=".$id);
+			//$text = $mysqli->real_escape_string($text);
+			mysqli_query($mysqli,"Delete from category WHERE id=".$id);
 //			echo "UPDATE category SET archive='$status' WHERE id=".$id;
 			//echo $text;
 			//echo $id;
@@ -497,13 +511,13 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		break;
 
 		case "changecategorycolor":
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$color = $_REQUEST['color'];
-			$color = mysql_real_escape_string($color);
+			$color = $mysqli->real_escape_string($color);
 			//$text = $_REQUEST['text'];
-			//$text = mysql_real_escape_string($text);
-			mysql_query("UPDATE category SET color='$color' WHERE id=".$id);
+			//$text = $mysqli->real_escape_string($text);
+			mysqli_query($mysqli,"UPDATE category SET color='$color' WHERE id=".$id);
 			echo "UPDATE category SET archive='$color' WHERE id=".$id;
 			//echo $color;
 			//echo $id;
@@ -513,8 +527,8 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		case "addtodo":
 			$id = $_REQUEST['id'];
 			//$kind = $_REQUEST['kind'];
-			mysql_query("INSERT INTO todo SET user='$id_user', category='$id', text='...' , timestamp='$time'");
-			$tid = mysql_insert_id();
+			mysqli_query($mysqli,"INSERT INTO todo SET user='$id_user', category='$id', text='...' , timestamp='$time'");
+			$tid = mysqli_insert_id($mysqli);
 			echo "<li class='todo' id='$tid'><div id='$tid' class='check'><img class='check false' src='inc/img/false.png'/></div><div id='$tid' class='text'>...</div><div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 		break;
 
@@ -524,10 +538,10 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$top = $_REQUEST['top'];
 			$left = $_REQUEST['left'];
 			//$kind = $_REQUEST['kind'];
-			mysql_query("INSERT INTO timeline SET user='$id_user' , `top`='$top' , `width`='$width' , `left`='$left', `name`='Timeline', `timestamp`='$time'");
+			mysqli_query($mysqli,"INSERT INTO timeline SET user='$id_user' , `top`='$top' , `width`='$width' , `left`='$left', `name`='Timeline', `timestamp`='$time'");
 
 
-			$tid = mysql_insert_id();
+			$tid = mysqli_insert_id($mysqli);
 			// echo "<li class='todo' id='$tid'><div id='$tid' class='check'><img class='check false' src='inc/img/false.png'/></div><div id='$tid' class='text'>...</div><div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 			echo $tid;
 		break;
@@ -538,16 +552,16 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$top = $_REQUEST['top'];
 			$left = $_REQUEST['left'];
 			//$kind = $_REQUEST['kind'];
-			mysql_query("INSERT INTO milestone SET user='$id_user' , `top`='$top' , `width`='$width' , `left`='$left', `name`='Timeline', `timestamp`='$time'");
+			mysqli_query($mysqli,"INSERT INTO milestone SET user='$id_user' , `top`='$top' , `width`='$width' , `left`='$left', `name`='Timeline', `timestamp`='$time'");
 
 
-			$tid = mysql_insert_id();
+			$tid = mysqli_insert_id($mysqli);
 			// echo "<li class='todo' id='$tid'><div id='$tid' class='check'><img class='check false' src='inc/img/false.png'/></div><div id='$tid' class='text'>...</div><div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 			echo $tid;
 		break;
 
 		case "edittimeline":
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$width = $_REQUEST['width'];
 			$top = $_REQUEST['top'];
@@ -559,22 +573,22 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$end = $_REQUEST['end'];
 
 			$name = $_REQUEST['name'];
-            $name = mysql_real_escape_string($name);
+            $name = $mysqli->real_escape_string($name);
             
 			$project = $_REQUEST['project'];
 
-			mysql_query("UPDATE timeline SET `top`='$top' , `width`='$width' , `left`='$left', `layer`='$layer', `days`='$days', `start`='$start', `end`='$end', `name`='$name', `project`='$project' WHERE id='$id' AND `user` = '$id_user'");
+			mysqli_query($mysqli,"UPDATE timeline SET `top`='$top' , `width`='$width' , `left`='$left', `layer`='$layer', `days`='$days', `start`='$start', `end`='$end', `name`='$name', `project`='$project' WHERE id='$id' AND `user` = '$id_user'");
 			// echo $text;
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysql_query("select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
 			echo $color_result;
 
 		break;
 		
 		case "edittmilestone":
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$width = $_REQUEST['width'];
 			$top = $_REQUEST['top'];
@@ -586,43 +600,43 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//$end = $_REQUEST['end'];
 
 			$name = $_REQUEST['name'];
-            $name = mysql_real_escape_string($name);
+            $name = $mysqli->real_escape_string($name);
             
 			$project = $_REQUEST['project'];
 
-			mysql_query("UPDATE milestone SET `top`='$top' , `width`='$width' , `left`='$left', `layer`='$layer', `start`='$start', `name`='$name', `project`='$project' WHERE id='$id' AND `user` = '$id_user'");
+			mysqli_query($mysqli,"UPDATE milestone SET `top`='$top' , `width`='$width' , `left`='$left', `layer`='$layer', `start`='$start', `name`='$name', `project`='$project' WHERE id='$id' AND `user` = '$id_user'");
 			// echo $text;
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysql_query("select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
 			echo $color_result;
 
 		break;
 
 		case "deletetimeline":
 			$id = $_REQUEST['id'];
-			mysql_query("DELETE FROM timeline WHERE user='$id_user' AND id=".$id);
+			mysqli_query($mysqli,"DELETE FROM timeline WHERE user='$id_user' AND id=".$id);
 			echo "done";
 		break;
 		
 		case "deletemilestone":
 			$id = $_REQUEST['id'];
-			mysql_query("DELETE FROM milestone WHERE user='$id_user' AND id=".$id);
+			mysqli_query($mysqli,"DELETE FROM milestone WHERE user='$id_user' AND id=".$id);
 			echo "done";
 		break;
 
 		case "deletetodo":
 			$id = $_REQUEST['id'];
 			$kind = $_REQUEST['kind'];
-			mysql_query("DELETE FROM $kind WHERE id=".$id);
+			mysqli_query($mysqli,"DELETE FROM $kind WHERE id=".$id);
 			echo "done";
 		break;
 
 		case "addcat":
 
-			mysql_query("INSERT INTO category SET user='$id_user', text='new' , timestamp='$time'");
-			$tid = mysql_insert_id();
+			mysqli_query($mysqli,"INSERT INTO category SET user='$id_user', text='new' , timestamp='$time'");
+			$tid = mysqli_insert_id($mysqli);
 			// echo "<li class='category' id='$tid'><div id='$tid' class='text cattext'>...</div><div class='options'><img class='edde edit' src='inc/img/edit_cat.png'/><img class='edde delete' src='inc/img/delete_cat.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 
 			echo "<ul  class='todo $tid' id='new'>
@@ -639,8 +653,8 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
             
 //            echo "Hello World";
 
-			$results = mysql_query("SELECT * FROM location WHERE user='$id_user'");
-			mysql_set_charset("utf8");
+			$results = mysqli_query($mysqli,"SELECT * FROM location WHERE user='$id_user'");
+			mysqli_set_charset($mysqli, "utf8");
 			//Create a new DOMDocument object
 			$dom = new DOMDocument("1.0");
 			$node = $dom->createElement("markers"); //Create new element node
@@ -648,7 +662,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//set document header to text/xml
 //			header("Content-type: application/xml");
 			// Iterate through the rows, adding XML nodes for each
-			while($obj = mysql_fetch_object($results))
+			while($obj = mysqli_fetch_object($results))
 			{
 			  $name = $obj->name;
 			  $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
@@ -674,13 +688,13 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 		case "deletelocation";
 
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			// get marker position and split it for database
 			$mLatLang	= explode(',',$_POST["latlang"]);
 			$mLat 		= filter_var($mLatLang[0], FILTER_VALIDATE_FLOAT);
 			$mLng 		= filter_var($mLatLang[1], FILTER_VALIDATE_FLOAT);
 
-			mysql_query("DELETE FROM location where latitude='$mLat' AND longitude='$mLng' AND user='$id_user'");
+			mysqli_query($mysqli,"DELETE FROM location where latitude='$mLat' AND longitude='$mLng' AND user='$id_user'");
 			//echo "DELETE FROM location where latitude='$mLat' AND longitude='$mLng' AND user='$id_user'";
 			exit("Done!");
 
@@ -688,7 +702,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 		case "addlocation";
 
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			// get marker position and split it for database
 			$mLatLang	= explode(',',$_POST["latlang"]);
 			$mLat 		= filter_var($mLatLang[0], FILTER_VALIDATE_FLOAT);
@@ -697,8 +711,8 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$description	= filter_var($_POST["description"], FILTER_SANITIZE_STRING);
 			$mType		= filter_var($_POST["type"], FILTER_SANITIZE_STRING);
 
-			mysql_query("INSERT INTO location (name, description, latitude, longitude, timestamp, user, type) VALUES ('$mName','$description',$mLat, $mLng, '$timestamp', '$id_user', '$mType')");
-			$id = mysql_insert_id();
+			mysqli_query($mysqli,"INSERT INTO location (name, description, latitude, longitude, timestamp, user, type) VALUES ('$mName','$description',$mLat, $mLng, '$timestamp', '$id_user', '$mType')");
+			$id = mysqli_insert_id($mysqli);
 			//$output = '<h1 class="marker-heading">'.$mName.'</h1><p>'.$mAddress.'</p>';
 
 			$output = '<div class="mapwin id'.$id.'"><input class="pinname" placeholder="Name..." value="'.$mName.'"/><textarea class="pintext" placeholder="description...">'.$description.'</textarea><select class="pinselect"><option value="1">City/Town</option><option value="2">House</option><option value="3">Hotel</option><option value="4">Restaurant</option><option value="5">Public Place</option><option value="6">Bar</option></select><button class="pinsave">SAVE</button><button class="pindelete">DELETE</button></div>';
@@ -710,20 +724,20 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 		case "savelocation":
 
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
-			$id = mysql_real_escape_string($id);
+			$id = $mysqli->real_escape_string($id);
 			$name = $_REQUEST['name'];
-			$name = mysql_real_escape_string($name);
+			$name = $mysqli->real_escape_string($name);
 			$description = $_REQUEST['description'];
-			$description = mysql_real_escape_string($description);
+			$description = $mysqli->real_escape_string($description);
 			$type = $_REQUEST['type'];
-			$type = mysql_real_escape_string($type);
+			$type = $mysqli->real_escape_string($type);
 
 			//$name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 			//$description = htmlentities($description, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 
-			mysql_query("UPDATE location SET name='$name', description='$description', type='$type' WHERE user='$id_user' AND id='$id'");
+			mysqli_query($mysqli,"UPDATE location SET name='$name', description='$description', type='$type' WHERE user='$id_user' AND id='$id'");
 
 			echo "done";
 
@@ -737,12 +751,12 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$date = $_REQUEST['date'];
 			$width = $_REQUEST['width'];
 			$mobile = $_REQUEST['mobile'];
-			$mobile = mysql_real_escape_string($mobile);
-			$date = mysql_real_escape_string($date);
-			// $width = mysql_real_escape_string($width);
+			$mobile = $mysqli->real_escape_string($mobile);
+			$date = $mysqli->real_escape_string($date);
+			// $width = $mysqli->real_escape_string($width);
 			// $width = 1339:
 			$x = 5;
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 
 			if ($mobile == 'true') {
 
@@ -768,7 +782,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 			$left = 0;
 
-			$result = mysql_query("
+			$result = mysqli_query($mysqli,"
 
 			Select `activitylevel`, `time`, kind, id, @n := @n + 1 counter
 			FROM (select @n:=0) initvars, daily_activity
@@ -780,11 +794,11 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			// check if data is returned
 //            echo $date;
 			// if not use new version
-			if (mysql_fetch_object($result)==0) {
+			if (mysqli_fetch_object($result)==0) {
 
 				// echo "NO activity level data<br>";
 
-				$result = mysql_query("
+				$result = mysqli_query($mysqli,"
 
 				select sleep.start as wakeup, sleep.end as sleep, entry.entry, sunrise, sunset, GMT_offset from `entry`
 				join location_day on entry.entry = location_day.entry
@@ -793,14 +807,14 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 				");
 
-				$data = mysql_fetch_object($result);
+				$data = mysqli_fetch_object($result);
 
 				// get data from the next day (sleep):
 				$date_n = strtotime("+1 day", strtotime($date));
 				$date_n = date("Y-m-d", $date_n);
 				// echo $date_n;
 
-				$results = mysql_query("
+				$results = mysqli_query($mysqli,"
 
 				select sleep.start as wakeup, sleep.end as sleep, entry.entry, sunrise, sunset from `entry`
 				join location_day on entry.entry = location_day.entry
@@ -809,7 +823,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 				");
 
-				$nextday = mysql_fetch_object($results);
+				$nextday = mysqli_fetch_object($results);
 
 				$sleep_n = $nextday->wakeup;
 				// echo "next day sleep time: ";
@@ -958,7 +972,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 				// echo $width;
 
 
-				$resultss = mysql_query("
+				$resultss = mysqli_query($mysqli,"
 
 				select work.project, task, start, duration, project.color from work
 				LEFT JOIN project ON project.name = work.project
@@ -966,7 +980,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 				");
 
-				while($data = mysql_fetch_object($resultss))
+				while($data = mysqli_fetch_object($resultss))
 				{
 
 
@@ -1043,7 +1057,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			// very new version END
 
 			// old version (self build activity tracker)
-			while($data = mysql_fetch_object($result))
+			while($data = mysqli_fetch_object($result))
 			{
 				$level = $data->activitylevel;
 				$o_level = $level;
@@ -1122,7 +1136,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
                 
             
             
-            $todo = mysql_query("# mysql queries for graphing
+            $todo = mysqli_query($mysqli,"# mysql queries for graphing
    
             # count todos finished   
             SELECT count(text) as Todo FROM todo
@@ -1192,7 +1206,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
               $columnValues[] = $row['Todo'];   
             }
 
-            $prev = mysql_query("# mysql queries for graphing
+            $prev = mysqli_query($mysqli,"# mysql queries for graphing
 
             # count todos finished   
             SELECT count(text) as Todo FROM todo
@@ -1264,7 +1278,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
             $arr = array('Todos', 'Days', 'Words' , 'Run' , 'Bike', 'Walk', 'Work');
 
-            $places = mysql_query("Select location.name as Location, count(*) as Num from entry
+            $places = mysqli_query($mysqli,"Select location.name as Location, count(*) as Num from entry
             left join location on entry.location = location.id
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1280,7 +1294,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
                 $Location[] = utf8_encode($row['Location']);
             }
 
-            $places_dur = mysql_query("Select count(*) as Num from entry
+            $places_dur = mysqli_query($mysqli,"Select count(*) as Num from entry
             left join location on entry.location = location.id
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1296,7 +1310,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
               $Location_dur[] = $row['Num'];   
             }
 
-            $run = mysql_query("select IFNULL(field.value, 0) as daily from entry 
+            $run = mysqli_query($mysqli,"select IFNULL(field.value, 0) as daily from entry 
             LEFT JOIN field ON entry.entry = field.entry AND field.field='1'
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1311,7 +1325,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
               $run_dur[] = $row['daily'];   
             }
 
-            $bike = mysql_query("select IFNULL(field.value, 0) as daily from entry 
+            $bike = mysqli_query($mysqli,"select IFNULL(field.value, 0) as daily from entry 
             LEFT JOIN field ON entry.entry = field.entry AND field.field='2'
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1326,7 +1340,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
               $bike_dur[] = $row['daily'];    
             }
 
-            $walk = mysql_query("select IFNULL(field.value, 0) as daily from entry 
+            $walk = mysqli_query($mysqli,"select IFNULL(field.value, 0) as daily from entry 
             LEFT JOIN field ON entry.entry = field.entry AND field.field='10'
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1341,7 +1355,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
               $walk_dur[] = $row['daily'];    
             }
 
-            $temp = mysql_query("select tempMax as daily from entry 
+            $temp = mysqli_query($mysqli,"select tempMax as daily from entry 
             RIGHT JOIN location_day ON entry.entry = location_day.entry
 
             WHERE MONTH(entry.day) = MONTH(CURDATE()) 
@@ -1415,15 +1429,15 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
             
         case "summary":
 
-			mysql_set_charset("utf8");
+			mysqli_set_charset($mysqli, "utf8");
 			$start = $_REQUEST['start'];
-			$start = mysql_real_escape_string($start);
+			$start = $mysqli->real_escape_string($start);
 			$end = $_REQUEST['end'];
-			$end = mysql_real_escape_string($end);
+			$end = $mysqli->real_escape_string($end);
             $prevstart = $_REQUEST['prevstart'];
-			$prevstart = mysql_real_escape_string($prevstart);
+			$prevstart = $mysqli->real_escape_string($prevstart);
 			$prevend = $_REQUEST['prevend'];
-			$prevend = mysql_real_escape_string($prevend);
+			$prevend = $mysqli->real_escape_string($prevend);
 
 
 //			echo "Summary of: ".$id_user." from: ".$start." to: ".$end."";
@@ -1447,12 +1461,12 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
             
             echo "<div id='field'>";
             
-            $fields = mysql_query("
+            $fields = mysqli_query($mysqli,"
 select field_settings.id, field_settings.name as name, unit.name as unit from field_settings
 left join unit on field_settings.unit = unit.id
 where user = '$id_user'
             ");
-			while($field = mysql_fetch_object($fields))
+			while($field = mysqli_fetch_object($fields))
 			{
                 
                 $name = $field->name;
@@ -1461,7 +1475,7 @@ where user = '$id_user'
                 
                 
 //                get value for this timeframe
-                $field_this = mysql_result(mysql_query("
+                $field_this = mysql_result(mysqli_query($mysqli,"
                 # display fields
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
@@ -1473,7 +1487,7 @@ group by field_settings.name;
             
                 
 //                get value for prev timeframe
-            $field_prev = mysql_result(mysql_query(" 
+            $field_prev = mysql_result(mysqli_query($mysqli," 
                 # display fields
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
@@ -1533,7 +1547,7 @@ echo "<div id='two'>";
             
 echo "<div id='places'>";            
             
-$resultes = mysql_query("
+$resultes = mysqli_query($mysqli,"
 
 Select location.name as places from location 
 left join entry on entry.location = location.id
@@ -1543,7 +1557,7 @@ group by location.name
 ");
 
             
-$resulti = mysql_query("
+$resulti = mysqli_query($mysqli,"
 
 Select location.name as places from location 
 left join entry on entry.location = location.id
@@ -1562,7 +1576,7 @@ group by location.name
             
             echo "<div id='places_names'><p>";
             
-            $re = mysql_query("
+            $re = mysqli_query($mysqli,"
             
             
             
@@ -1580,7 +1594,7 @@ limit 0,5
 
             
             ");
-			while($tag = mysql_fetch_object($re))
+			while($tag = mysqli_fetch_object($re))
 			{
                 
                 $Location = $tag->Location;
@@ -1602,7 +1616,7 @@ echo "</p></div></div>";
             
 echo "<div id='tags'>";
             
-$resulte = mysql_query("
+$resulte = mysqli_query($mysqli,"
 
 SELECT `name`, COUNT(`name`) AS NumOccurrences FROM `tags` 
 INNER JOIN `entry` ON entry.entry = tags.entry
@@ -1612,7 +1626,7 @@ GROUP BY `name` HAVING COUNT(*) > 0 ORDER BY NumOccurrences DESC
 ");
 
             
-$resultes = mysql_query("
+$resultes = mysqli_query($mysqli,"
 
 SELECT `name`, COUNT(`name`) AS NumOccurrences FROM `tags` 
 INNER JOIN `entry` ON entry.entry = tags.entry
@@ -1633,7 +1647,7 @@ GROUP BY `name` HAVING COUNT(*) > 0 ORDER BY NumOccurrences DESC
             
             echo "<div id='tags_names'><p>";
             
-$res = mysql_query("
+$res = mysqli_query($mysqli,"
             
 SELECT `name`, COUNT(`name`) AS Num FROM `tags` 
 INNER JOIN `entry` ON entry.entry = tags.entry
@@ -1642,7 +1656,7 @@ GROUP BY `name` HAVING COUNT(*) > 0 ORDER BY Num DESC
 limit 0,5;
             
             ");
-			while($tag = mysql_fetch_object($res))
+			while($tag = mysqli_fetch_object($res))
 			{
                 
                 $name = $tag->name;
@@ -1665,7 +1679,7 @@ echo "<div id='three'>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysql_query("
+            $color_resultes = mysql_result(mysqli_query($mysqli,"
                 
                 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$start' and '$end'
@@ -1675,7 +1689,7 @@ WHERE check_date BETWEEN '$start' and '$end'
 			
 
             
-            $color_resultii = mysql_result(mysql_query("
+            $color_resultii = mysql_result(mysqli_query($mysqli,"
                 
 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$prevstart' and '$prevend'
@@ -1696,7 +1710,7 @@ echo "</div>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysql_query("
+            $color_resultes = mysql_result(mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$start' and '$end'
@@ -1706,7 +1720,7 @@ WHERE start  BETWEEN '$start' and '$end'
 			
 
             
-            $color_resultii = mysql_result(mysql_query("
+            $color_resultii = mysql_result(mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$prevstart' and '$prevend'
@@ -1730,7 +1744,7 @@ echo "</div>";
 
 echo "<div class='compare'>";
 
-                        $color_resultes = mysql_result(mysql_query("
+                        $color_resultes = mysql_result(mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
@@ -1742,7 +1756,7 @@ WHERE day BETWEEN '$start' and '$end'
 			
 
             
-            $color_resultii = mysql_result(mysql_query("
+            $color_resultii = mysql_result(mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
@@ -1763,7 +1777,7 @@ echo "</div>";
 
 echo "<div class='compare'>";
             
-               $weather_1 = mysql_result(mysql_query("
+               $weather_1 = mysql_result(mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry
@@ -1774,7 +1788,7 @@ WHERE entry.user = '$id_user' AND entry.day BETWEEN '$start' and '$end'
 			
 
             
-            $weather_2 = mysql_result(mysql_query("
+            $weather_2 = mysql_result(mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry

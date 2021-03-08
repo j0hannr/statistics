@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
-mysqli_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];
     $today = date('Y-m-d', time()); ?>
@@ -99,6 +99,7 @@ if ($_SESSION['login']==1) {
             $stmt->close();
             // echo $arr['first']." && ".$arr['firstname'];
 
+
 		?>
     </a>
     <br>
@@ -113,6 +114,22 @@ if ($_SESSION['login']==1) {
                 <?php 
                 
                     include 'menu.php';
+
+
+                    $id_user = "1";
+                    $date = "2021-03-29";
+                    $location = "2";
+                    // // $timestamps = strtotime($date);
+                    $timestamp = date('Y-m-d H:i:s', time());
+                    // $stmt = $mysqli->prepare("INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
+                    // // $stmt->bind_param("si", $_POST['name'], $_SESSION['id']);
+                    // $stmt->execute();
+                    // echo $mysqli->insert_id;
+                    // $stmt->close();
+
+                    // mysqli_query($mysqli,"INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
+                    // $id = mysqli_insert_id($mysqli);
+                    // echo "<h1>".$id."</h1>";
     
                 ?>
 

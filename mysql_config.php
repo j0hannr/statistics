@@ -25,6 +25,8 @@ try {
     exit('Error connecting to database'); //Should be a message a typical user could understand
 }
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 
 // ONE SQUARED

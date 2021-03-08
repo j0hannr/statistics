@@ -306,43 +306,54 @@ $(document).ready(function() {
         //get data
         widthtimelineday = $('.day_timeline').width();
 
+
+        /**
+         * enable when weather data available
+         * OR throw error in PHP 
+         */
+
         // get the daily graph
-        $.ajax({
-            url: "ajax.php",
-            type: "POST",
-//            async: false,
-            data: {
-                action: 'daily_graph',
-                date: smstime,
-                width: widthtimelineday,
-                mobile: isMobile
-            },
-            success: function(data) {
-                if (data == 'notlogged') {
-                    relogin();
-                    return false;
-                }
-                $('div#dailyactivity').html(data);
-                console.log(data);
-                console.log("1. - day timeline");
+//         $.ajax({
+//             url: "ajax.php",
+//             type: "POST",
+// //            async: false,
+//             data: {
+//                 action: 'daily_graph',
+//                 date: smstime,
+//                 width: widthtimelineday,
+//                 mobile: isMobile
+//             },
+//             success: function(data) {
+//                 if (data == 'notlogged') {
+//                     relogin();
+//                     return false;
+//                 }
+//                 $('div#dailyactivity').html(data);
+//                 console.log(data);
+//                 console.log("1. - day timeline");
 
 
-                //alert(smstime);
-            },
-            error: function(data) {
-                alert("sorry, couldn't load day timeline");
-            }
-        });
+//                 //alert(smstime);
+//             },
+//             error: function(data) {
+//                 alert("sorry, couldn't load day timeline");
+//             }
+//         });
 
         
-        console.log("4");
+        console.log("4 :D");
+
+        // alert(smstime);
         
         console.log("http://" + host + "/" + directory + "/data.php?id=" + smstime);
+        // alert("http://" + host + "/" + directory + "/data.php?id=" + smstime);
+
+        // alert("http://" + host + "/" + directory + "/field.php?id=" + entry);
 
         // get data from db
         $.getJSON("http://" + host + "/" + directory + "/data.php?id=" + smstime, function(data) {
                 
-                
+                console.log("Getting data from data.php");
                 //$.getJSON( "http://localhost:8888/6/data.php?id=" + smstime, function( data ) {
 
                 if (data == 'notlogged') {
@@ -398,7 +409,7 @@ $(document).ready(function() {
 
                 //alert[6];
                 entry = data[1];
-                //alert(entry);
+                // alert(entry);
 
                 console.log("2. - weather");
 
@@ -428,8 +439,13 @@ $(document).ready(function() {
 
 
                 //fields
+                
+
                 $.getJSON("http://" + host + "/" + directory + "/field.php?id=" + entry, function(field) {
                     //$.getJSON( "http://localhost:8888/6/field.php?id=" + entry, function( field ) {
+
+                    // alert("http://" + host + "/" + directory + "/field.php?id=" + entry);
+                    // alert(entry);
 
                     $.each(field, function(index, value) {
                         //console.log(value);
@@ -557,6 +573,7 @@ $(document).ready(function() {
                         location: location
                     },
                     success: function(data) {
+
                         if (data == 'notlogged') {
                             relogin();
                         }
@@ -571,7 +588,7 @@ $(document).ready(function() {
 
                     },
                     error: function(data) {
-                        alert("sorry, couldn't add day");
+                        alert("sorry, couldn't add day - script.js");
                     }
                 });
             });

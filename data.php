@@ -1,14 +1,14 @@
 <?php
 session_start();
 require_once 'config.php';
-mysql_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 if ($_SESSION['login']==1){
 //$mysql_timestamp = date('Y-m-d H:i:s', time());
 //$feedtime = date('Y-m-d', time());
 $id_user = $_SESSION['id'];
 
 $id = $_GET['id'];
-$id = mysql_real_escape_string($id);
+$id = $mysqli->real_escape_string($id);
 
 //echo $id_user;
 //echo $id;
@@ -17,7 +17,7 @@ $id = mysql_real_escape_string($id);
 //$view = mysql_query("SELECT * FROM dayview WHERE entry.user='$id_user' AND entry.day='$id'");
     
     
-    $view = mysql_query("select 
+    $view = mysqli_query($mysqli, "select 
 
 	`entry`.`user` AS `user`,
    `entry`.`entry` AS `entry`,
@@ -41,7 +41,7 @@ order by entry asc limit 0,1");
     
 
 //$array = mysql_fetch_row($view) or die(mysql_error());
-$day = mysql_fetch_array($view) or die(mysql_error());
+$day = mysqli_fetch_array($view) or die(mysqli_error($mysqli));
 //echo $array;
 
 echo json_encode($day);
