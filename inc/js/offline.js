@@ -539,7 +539,7 @@ $(document).ready(function() {
 
                     },
                     error: function(data) {
-                        alert("sorry, couldn't add day");
+                        alert("sorry, couldn't add day - offline");
                     }
                 });
             });

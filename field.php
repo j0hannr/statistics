@@ -1,21 +1,21 @@
 <?php
 session_start();
 require_once 'config.php';
-mysql_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 if ($_SESSION['login']==1){
 //$mysql_timestamp = date('Y-m-d H:i:s', time());
 //$feedtime = date('Y-m-d', time());
 $id_user = $_SESSION['id'];
 
 $id = $_GET['id'];
-$id = mysql_real_escape_string($id);
+$id = $mysqli->real_escape_string($id);
 //echo $id_user;
 //echo $id;
 
 $json = array();
 			
-$re = mysql_query("SELECT field_settings.id, field.id AS fid, field_settings.name, field.value, unit.symbol FROM field_settings LEFT JOIN field ON field_settings.id = field.field AND field.entry='$id' JOIN unit ON field_settings.unit = unit.id  WHERE field_settings.user='$id_user' ");
-while($row = mysql_fetch_array($re))
+$re = mysqli_query($mysqli, "SELECT field_settings.id, field.id AS fid, field_settings.name, field.value, unit.symbol FROM field_settings LEFT JOIN field ON field_settings.id = field.field AND field.entry='$id' JOIN unit ON field_settings.unit = unit.id  WHERE field_settings.user='$id_user' ");
+while($row = mysqli_fetch_array($re))
 {
 				
     //if ($fid->value == '') { $val = '0'; } else { $val = $fid->value; }

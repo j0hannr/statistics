@@ -2,18 +2,31 @@
 
 // LOCALHOST
 
-    $mysqlhost="localhost"; // MySQL-Host angeben
+// $mysqlhost="localhost"; // MySQL-Host angeben
 
-    $mysqluser="root"; // MySQL-User angeben
+// $mysqluser="root"; // MySQL-User angeben
 
-    $mysqlpwd="root"; // Passwort angeben
+// $mysqlpwd="root"; // Passwort angeben
 
-    $connection=mysql_connect($mysqlhost, $mysqluser, $mysqlpwd) or die ('Verbindungsversuch fehlgeschlagen');
+// $connection= mysqli_connect($mysqlhost, $mysqluser, $mysqlpwd) or die ('Verbindungsversuch fehlgeschlagen');
 
-    $mysqldb="statistics"; // Gewuenschte Datenbank angeben
+// $mysqldb="statistics"; // Gewuenschte Datenbank angeben
 
-    mysql_select_db($mysqldb, $connection) or die('Konnte Datenbank nicht waehlen');
+// mysqli_select_db($mysqldb, $connection) or die('Konnte Datenbank nicht waehlen');
 
+
+mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+try {
+    # host, user , password, database name
+    $mysqli = new mysqli("localhost", "root", "root", "statistics");
+    $mysqli->set_charset("utf8mb4");
+} catch(Exception $e) {
+    error_log($e->getMessage());
+    exit('Error connecting to database'); //Should be a message a typical user could understand
+}
+
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
 
 
 // ONE SQUARED
