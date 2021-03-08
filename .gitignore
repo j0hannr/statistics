@@ -1,2 +1,4 @@
 # ignore mysql cconfig file 
 mysql_config.php
+LocalReadMe.md
+con.php
