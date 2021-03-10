@@ -12,29 +12,27 @@ all is manually written as i have learned it myself and done it several years ag
 using ` MySQL ` for the database, ` PHP ` and ` jQuery `.
 
 ### requirements
-It is currently running on ` PHP ` 5.5.38. 
-
-running *secure* on [statistics.johannrohn.de](https://statistics.johannrohn.de)
-`name` stats
-`pass` 4%&UZffgh
-
-`MySQL Database` statistics `name` stats `pass` 9k?i5vJ9
+It is currently running on ` PHP 5.5.38 ` . 
 
 
 ### goals 
-* revive project
-* running on ` PHP ` 7
-* about page with features
-* release
-* clean/industrie compliant code
-* get new weather API
-* using mapbox
-* auto setup
-* make it public
-* css check up
-* use modern framwork/library or stack to handle db connection
-* encrypted
-* additional features
+* [ ] revive project
+* [ ] running on ` PHP 7` 
+* [ ] config file
+* [ ] about page with features
+* [ ] release v1
+* [ ] weather api
+* [ ] daily graph
+* [ ] remove unsued files and code
+* [ ] clean/industrie compliant code
+* [ ] get new weather API
+* [ ] using mapbox
+* [ ] auto setup
+* [x] make it public
+* [ ] css check up
+* [ ] use modern framwork/library or stack to handle db connection
+* [ ] encrypted daata
+* [ ] additional features
 
 ## cheat sheet
 updating code to be compliant with `PHP` 7
