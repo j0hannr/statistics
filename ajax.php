@@ -1475,26 +1475,25 @@ where user = '$id_user'
                 
                 
 //                get value for this timeframe
-                $field_this = mysql_result(mysqli_query($mysqli,"
-                # display fields
+                $field_this = mysqli_free_result(mysqli_query($mysqli,"
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
 right join entry on field.entry = entry.entry
 where field_settings.user = '$id_user' and field_settings.id = '$id' and entry.day BETWEEN '$start' and '$end'
 group by field_settings.name;
-                "),0);
+                "));
 //			echo $field_this;
             
                 
 //                get value for prev timeframe
-            $field_prev = mysql_result(mysqli_query($mysqli," 
+            $field_prev = mysqli_free_result(mysqli_query($mysqli," 
                 # display fields
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
 right join entry on field.entry = entry.entry
 where field_settings.user = '$id_user' and field_settings.id = '$id' and entry.day BETWEEN '$prevstart' and '$prevend'
 group by field_settings.name;
-                "),0);
+                "));
 //			echo $field_prev;
 
                 
@@ -1566,8 +1565,8 @@ group by location.name
 
 ");
 
-        $current = mysql_num_rows($resultes);
-        $prev = mysql_num_rows($resulti);
+        $current = mysqli_num_rows($resultes);
+        $prev = mysqli_num_rows($resulti);
             
 //        echo "";
         echo "<p id='places'>Places</p><div id='places_amount'><div id='prev'><p id='this'>$current</p><p id='prev'>$prev</p></div></div>";
@@ -1635,8 +1634,8 @@ GROUP BY `name` HAVING COUNT(*) > 0 ORDER BY NumOccurrences DESC
 
 ");
            
-            $current = mysql_num_rows($resulte);
-            $prev = mysql_num_rows($resultes);
+            $current = mysqli_num_rows($resulte);
+            $prev = mysqli_num_rows($resultes);
             
             echo "<p id='places'>Tags</p><div id='tags_amount'><div id='prev'><p id='this'>$current</p><p id='prev'>$prev</p></div></div>";
             
@@ -1679,23 +1678,23 @@ echo "<div id='three'>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysqli_query($mysqli,"
+            $color_resultes = mysqli_free_result(mysqli_query($mysqli,"
                 
                 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$start' and '$end'
 	AND user = '$id_user'
                 
-                "),0);
+                "));
 			
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                "));
 
 // echo $color_resultes; // echo " TODOS "; // echo $color_resultii; // echo "<br>";
             
@@ -1710,23 +1709,23 @@ echo "</div>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysqli_query($mysqli,"
+            $color_resultes = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$start' and '$end'
 	AND user = '$id_user'
                 
-                "),0);
+                "));
 			
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                "));
 
 //            echo $color_resultes;
 //            echo " MILESTONES ";
@@ -1744,7 +1743,7 @@ echo "</div>";
 
 echo "<div class='compare'>";
 
-                        $color_resultes = mysql_result(mysqli_query($mysqli,"
+                        $color_resultes = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
@@ -1752,18 +1751,18 @@ WHERE day BETWEEN '$start' and '$end'
 	AND user = '$id_user'
 	
                 
-                "),0);
+                "));
 			
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
 WHERE day BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                "));
 
 // echo $color_resultes; // echo " WORDS "; // echo $color_resultii; // echo "<br>";
             
@@ -1777,24 +1776,24 @@ echo "</div>";
 
 echo "<div class='compare'>";
             
-               $weather_1 = mysql_result(mysqli_query($mysqli,"
+               $weather_1 = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry
 WHERE entry.user = '$id_user' AND entry.day BETWEEN '$start' and '$end'
 	
                 
-                "),0);
+                "));
 			
 
             
-            $weather_2 = mysql_result(mysqli_query($mysqli,"
+            $weather_2 = mysqli_free_result(mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry
 WHERE entry.user = '$id_user' AND entry.day BETWEEN '$prevstart' and '$prevend'
                 
-                "),0);
+                "));
 
 // echo $weather_1; // echo " WEATHER "; // echo $weather_2; // echo "<br>";
             

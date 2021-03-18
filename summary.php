@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
-//mysql_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 header('Content-Type: text/html; charset=ISO-8859-1');
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];

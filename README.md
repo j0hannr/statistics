@@ -18,7 +18,8 @@ It is currently running on ` PHP 5.5.38 ` .
 ### goals 
 * [ ] revive project
 * [ ] running on ` PHP 7` 
-* [ ] config file
+* [ ] config file (auto setup)
+* [ ] misterious w (tag input)
 * [ ] about page with features
 * [ ] release v1
 * [ ] weather api
@@ -59,8 +60,13 @@ $id = mysqli_insert_id($mysqli);
 
 # MySQL error
 mysql_error();
-# Coompliant
+# Compliant
 mysqli_error($mysqli);
+
+# MySQL Result
+mysql_result(mysqli_query(...));
+# Compliant
+mysqli_free_result(mysqli_query(...));
 
 # Charset
 mysql_set_charset("utf8");

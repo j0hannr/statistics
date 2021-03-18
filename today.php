@@ -1,15 +1,19 @@
 <?php
+
 session_start();
 require_once 'config.php';
 mysqli_set_charset($mysqli, "utf8");
+
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];
-    $today = date('Y-m-d', time()); ?>
+    $today = date('Y-m-d', time()); 
+    
+?>
 
 
 
-    <!doctype html>
-    <html>
+<!doctype html>
+<html>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -26,32 +30,11 @@ if ($_SESSION['login']==1) {
         <link rel="stylesheet" href="inc/css/pickadate.css">
         <link rel="stylesheet" href="inc/css/normalize.css">
         <link rel="stylesheet" href="inc/css/skeleton.css">
-        <!--font-->
-        <!--<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>-->
-        <!--<link href='http://fonts.googleapis.com/css?family=Dancing+Script:700' rel='stylesheet' type='text/css'>-->
-
-
+        <!-- icon font -->
         <link rel="stylesheet" href="inc/css/icon-font.css">
-
     </head>
 
     <body>
-
-
-        <!--Logged out reminder-->
-        <!-- <div id="screencover">
-<div id="loginreminder">
-    <p id="loginreminder"><span id="sorry">sorry,</span><br><span class="highlight">you are not logged in anymore.</span><br><span class="highlight">just click here to login</span><br><span class="highlight">again...</span></p>
-</div>
-</div> -->
-
-
-        <!-- site -->
-        <!-- selelect date -->
-
-        <!-- https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyBmTAYFwzl41BtNCEShQ2OzTbpHMSnxAL4&center=-33.9,151.14999999999998&zoom=12&format=png&maptype=roadmap&style=element:geometry%7Ccolor:0xf5f5f5&style=element:labels.icon%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x616161&style=element:labels.text.stroke%7Ccolor:0xf5f5f5&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:geometry%7Ccolor:0xeeeeee&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0xe5e5e5&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:road%7Celement:geometry%7Ccolor:0xffffff&style=feature:road.arterial%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:road.highway%7Celement:geometry%7Ccolor:0xdadada&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:transit.line%7Celement:geometry%7Ccolor:0xe5e5e5&style=feature:transit.station%7Celement:geometry%7Ccolor:0xeeeeee&style=feature:water%7Ccolor:0xffffff&style=feature:water%7Celement:geometry%7Ccolor:0xffffff&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&size=480x360 -->
-
-
 
         <div class="container">
 
@@ -66,86 +49,18 @@ if ($_SESSION['login']==1) {
 
                 </div>
 
-                <!-- user name && Logout -->
-                <!--
-<div id="session_details">
-    <a class="session" href="#">
-        <?php 
-            # old
-		    $result = mysqli_query("SELECT firstname AS first FROM user WHERE id = '$id_user'");
-			while($user = mysqli_fetch_object($result))
-			{echo $user->first;}
-			echo " hallo";
-			$result = mysqli_query("SELECT lastname AS second FROM user WHERE id = '$id_user'");
-			while($user = mysqli_fetch_object($result))
-			{echo $user->second;}
-
-            # intermediate !
-            # include >>> $mysqli <<< into mysqli_query
-            $result = mysqli_query($mysqli, "SELECT firstname AS first FROM user WHERE id = '$id_user'");
-			while($user = mysqli_fetch_object($result))
-			{echo $user->first;}
-			echo " hallo";
-			$result = mysqli_query("SELECT lastname AS second FROM user WHERE id = '$id_user'");
-			while($user = mysqli_fetch_object($result))
-			{echo $user->second;}
-
-            # new
-            $stmt = $mysqli->prepare("SELECT firstname, lastname AS first FROM user WHERE id = '$id_user'");
-            $stmt->execute();
-            $arr = $stmt->get_result()->fetch_assoc();
-            // if(!$arr) exit('No rows');
-            // var_export($arr);
-            $stmt->close();
-            // echo $arr['first']." && ".$arr['firstname'];
-
-
-		?>
-    </a>
-    <br>
-    <a class="session" href="logout.php">Logout</a>
-</div>
--->
-
 
                 <!-- menu -->
-
-
                 <?php 
                 
-                    include 'menu.php';
+                include 'menu.php';
 
-
-                    $id_user = "1";
-                    $date = "2021-03-29";
-                    $location = "2";
-                    // // $timestamps = strtotime($date);
-                    $timestamp = date('Y-m-d H:i:s', time());
-                    // $stmt = $mysqli->prepare("INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
-                    // // $stmt->bind_param("si", $_POST['name'], $_SESSION['id']);
-                    // $stmt->execute();
-                    // echo $mysqli->insert_id;
-                    // $stmt->close();
-
-                    // mysqli_query($mysqli,"INSERT INTO `entry` (`user`, `day`, `location`, `timestamp`, `milestone`, `story`, `quote`) VALUES ('$id_user','$date','$location','$timestamp', '', '', '')");
-                    // $id = mysqli_insert_id($mysqli);
-                    // echo "<h1>".$id."</h1>";
+                $id_user = "1";
+                $date = "2021-03-29";
+                $location = "2";
+                $timestamp = date('Y-m-d H:i:s', time());
     
                 ?>
-
-
-                <!--   hello  ------------------------------------ world -->
-                <!--
-<div class="two columns u-pull-right">
-    <div class="weather_icon">
-        <div data-icon="a" class="icon"></div>
-    </div>
-    <div class="degrees">
-        <p id="temperature">11°</p>
-    </div>
-</div>
--->
-
 
             </div>
 
@@ -161,13 +76,7 @@ if ($_SESSION['login']==1) {
 
             <!-- tags and buttons to todos and timeline -->
             <div class="tags" class="row">
-                <!--                <div class="one column">-->
-                <!--
-<a class="icon" href="todo.php">
-    <div data-icon="o" class="icon stats_size"></div>
-</a>
--->
-                <!--                </div>-->
+
                 <div class="eleven columns">
                     <div id="tagbox">
                         <div id="tags">
@@ -177,11 +86,7 @@ if ($_SESSION['login']==1) {
                     </div>
                 </div>
                 <div class="one column">
-                    <!--
-<a class="icon" href="timeline.php">
-    <div data-icon="f" id="rightalign" class="icon stats_size"></div>
-</a>
--->
+
                     <div class="weather_icon">
                         <!-- <div data-icon="a" class="icon"></div> -->
                     </div>
@@ -199,56 +104,9 @@ if ($_SESSION['login']==1) {
                 <!-- fields -->
                 <div class="one-third column fields">
 
-
                     <div id='fieldarea'>
                         <!-- fields go in here -->
-
-
-                        <!-- sample: -->
-                        <!-- <div id="run" class="field 7583">
-					<img class="buttons plus" src="inc/img/plus_2.png">
-					<img class="buttons minus" src="inc/img/minus_2.png">
-					<p class="number 1" id="run">
-						<span class="value">2</span>
-						<span class="lable">km</span></p>
-					<p class="name">run</p>
-				</div> -->
-
-
                     </div>
-
-
-
-                    <!-- <div>
-				<div class="number">5.23<span class="unit">km</span></div>
-				<div class="field_name">Run</div>
-				<div data-icon="g" class="icon"></div>
-			</div>
-
-			<div>
-				<div class="number">18<span class="unit">km</span></div>
-				<div class="field_name">Bike</div>
-				<div data-icon="h" class="icon"></div>
-			</div>
-
-			<div>
-				<div class="number">3<span class="unit">h</span> 39<span class="unit">min</span></div>
-				<div class="field_name">Work</div>
-				<div data-icon="i" class="icon"></div>
-			</div>
-
-			<div>
-				<div class="number">7.29<span class="unit">km</span></div>
-				<div class="field_name">Walk</div>
-				<div data-icon="j" class="icon"></div>
-			</div>
-
-			<div>
-				<div class="number">29<span class="unit">€</span></div>
-				<div class="field_name">Outflow</div>
-				<div data-icon="k" class="icon"></div>
-			</div> -->
-
 
                 </div>
 
@@ -257,42 +115,39 @@ if ($_SESSION['login']==1) {
                     <div id="typewriter" data-icon="E" class="icon"></div>
 
                     <textarea id="story">
+		    	    </textarea>
 
-			</textarea>
+            </div>
 
+            <!-- location -->
+            <div style="background-color: #dddddd;" class="one-third column">
+
+
+                <div id="gmap">
+                    <!-- google map -->
                 </div>
 
-                <!-- location -->
-                <div style="background-color: #dddddd;" class="one-third column">
 
+                <!--Location-->
+                <select id="location">
+                    <?php
 
-                    <div id="gmap">
-                        <!-- google map -->
-                    </div>
+                    $result = mysqli_query( $mysqli, "SELECT `id`,`name` FROM `location` WHERE user='$id_user' ORDER BY location.id = '12' DESC");
+                    while ($day = mysqli_fetch_object($result)) {
+                        $name = $day->name;
+                        $id = $day->id;
+                        echo "<option value='$id'>$name</option>";
+                    } 
+                    ?>
+                </select>
 
-                    <!--Location-->
-                    <select id="location">
-			<?php
-                $result = mysqli_query("SELECT `id`,`name` FROM `location` WHERE user='$id_user' ORDER BY location.id = '12' DESC");
-    while ($day = mysqli_fetch_object($result)) {
-        $name = $day->name;
-        $id = $day->id;
-        echo "<option value='$id'>$name</option>";
-    } ?>
-
-			</select>
-
-                    <!--
-<a class="icon" href="map.php">
-    <div data-icon="e" id="map_link" class="icon stats_size"></div>
-</a>
--->
-                </div>
+                <a class="icon" href="map.php">
+                    <div data-icon="e" id="map_link" class="icon stats_size"></div>
+                </a>
 
             </div>
 
         </div>
-
 
 
         <!-- pick a date -->
@@ -301,24 +156,20 @@ if ($_SESSION['login']==1) {
         </fieldset>
 
 
-
-
-
         <!-- scripts -->
         <script src="inc/js/pickadate.js"></script>
         <script src="inc/js/script.js"></script>
         <script src="inc/js/moment.js"></script>
 
 
-
-
     </body>
 
-    </html>
+</html>
 
-    <?php
+ <?php
 
-} else {
+} 
+else {
     header('Location: http://'.$host.'/login.php');
 }
 
