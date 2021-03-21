@@ -1,11 +1,18 @@
 <?php
+
 session_start();
 require_once 'config.php';
-//mysql_set_charset("utf8");
-header('Content-Type: text/html; charset=ISO-8859-1');
+
+mysqli_set_charset($mysqli, "utf8");
+
+// header('Content-Type: text/html; charset=ISO-8859-1');
+
 if ($_SESSION['login']==1) {
+
     $id_user = $_SESSION['id'];
-    $today = date('Y-m-d', time()); ?>
+    $today = date('Y-m-d', time()); 
+    
+?>
 
     <!DOCTYPE html>
     <html>
@@ -57,18 +64,17 @@ if ($_SESSION['login']==1) {
                     <div class="number">
 
                         <?php
-        $re = mysql_query("SELECT Count(`check_value`) as todoleft FROM `todo`
-left join category on category.id = todo.category
-WHERE todo.user = $id_user AND category.archive = 'false' AND todo.check_value = 'false'");
-    while ($tag = mysql_fetch_object($re)) {
-        echo  $tag->todoleft;
-    } ?>
+                        $re = mysqli_query($mysqli,"SELECT Count(`check_value`) as todoleft FROM `todo`
+                            left join category on category.id = todo.category
+                            WHERE todo.user = $id_user AND category.archive = 'false' AND todo.check_value = 'false'");
+
+                        while ($tag = mysqli_fetch_object($re)) {
+                            echo  $tag->todoleft;
+                        } 
+                        ?>
 
                     </div>
                     <div class="description">Todo's left</div>
-
-
-
 
 
 
@@ -107,14 +113,12 @@ WHERE todo.user = $id_user AND category.archive = 'false' AND todo.check_value =
                 <!-- </select> -->
 
 
-                <?php
+        <?php
 
-
-
-    $re = mysql_query("SELECT `text`,category.id, category.color FROM `category`
-LEFT JOIN project ON project.name = category.text
-WHERE category.user = '$id_user' AND archive = 'false'");
-    while ($cat = mysql_fetch_object($re)) {
+        $re = mysqli_query($mysqli,"SELECT `text`,category.id, category.color FROM `category`
+            LEFT JOIN project ON project.name = category.text
+            WHERE category.user = '$id_user' AND archive = 'false'");
+        while ($cat = mysqli_fetch_object($re)) {
         $name = $cat->text;
         $name = htmlentities($name);
         $id = $cat->id;
@@ -122,6 +126,7 @@ WHERE category.user = '$id_user' AND archive = 'false'");
         if (!$color) {
             $color = "";
         }
+
         echo "<ul style='background-color:#".$color.";' class='todo $id' id='$name'>";
         echo "<h1>$name</h1>";
         echo "<div class='catoptions'><div data-icon='F' class='icon edit'></div><div data-icon='H' class='icon archive'></div><div data-icon='I' class='icon color'></div></div>";
@@ -154,26 +159,25 @@ WHERE category.user = '$id_user' AND archive = 'false'");
         // echo "<button class='edit'>edit name</button>";
         // echo "<button class='archive'>archive</button>";
 
-        $res = mysql_query("SELECT `text`,`id`,`check_value` FROM `todo` WHERE `user` = $id_user AND `category` = $id AND (`check_date` > ADDDATE(NOW(), INTERVAL -1440 MINUTE) OR `check_value` = 'false') ORDER BY `deadline`,`timestamp` ASC");
-        while ($todo = mysql_fetch_object($res)) {
+        $res = mysqli_query($mysqli,"SELECT `text`,`id`,`check_value` FROM `todo` WHERE `user` = $id_user AND `category` = $id AND (`check_date` > ADDDATE(NOW(), INTERVAL -1440 MINUTE) OR `check_value` = 'false') ORDER BY `position`,`deadline`,`timestamp` ASC");
+        while ($todo = mysqli_fetch_object($res)) {
             $tid = $todo->id;
             $text = $todo->text;
             // $text = htmlentities($text);
-            $text = htmlentities($text, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+            // $text = htmlentities($text, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
             $check = $todo->check_value;
 
-                    //<input id='$tid' class='text' value='$text'/>
-
-
-                    echo "<li class='todo $check' id='$tid'><div id='$tid' class='check'><img class='check $check' src='inc/img/$check.png'/></div>
-                    <div id='$tid' style='' class='text'>$text</div>
-                    <div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
+            //<input id='$tid' class='text' value='$text'/>
+            echo "<li class='todo $check' id='$tid'><div id='$tid' class='check'><img class='check $check' src='inc/img/$check.png'/></div>
+            <div id='$tid' style='' class='text'>$text</div>
+            <div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
+        
         }
 
         echo "<li id='$id' class='add todo'><span class='posmoile'>Add Todo</span></li>";
-
         echo "</ul>";
-    } ?>
+    } 
+    ?>
 
                     <!-- add category dialog -->
                     <ul class="add todo">
@@ -190,12 +194,10 @@ WHERE category.user = '$id_user' AND archive = 'false'");
                     <!-- archived todos: -->
 
 
-                    <?php
+    <?php
 
-
-
-    $re = mysql_query("SELECT `text`,category.id, project.name, project.color FROM `category` LEFT JOIN project ON project.name = category.text WHERE category.user = $id_user AND archive = 'true'");
-    while ($cat = mysql_fetch_object($re)) {
+    $re = mysqli_query($mysqli,"SELECT `text`,category.id, project.name, project.color FROM `category` LEFT JOIN project ON project.name = category.text WHERE category.user = $id_user AND archive = 'true'");
+    while ($cat = mysqli_fetch_object($re)) {
         $name = $cat->text;
         $name = htmlentities($name);
         $id = $cat->id;
@@ -214,26 +216,24 @@ WHERE category.user = '$id_user' AND archive = 'false'");
         // echo "<button class='edit'>edit name</button>";
         // echo "<button class='archive'>archive</button>";
 
-        $res = mysql_query("SELECT `text`,`id`,`check_value` FROM `todo` WHERE `user` = $id_user AND `category` = $id AND (`check_date` > ADDDATE(NOW(), INTERVAL -1440 MINUTE) OR `check_value` = 'false') ORDER BY `deadline`,`timestamp` ASC");
-        while ($todo = mysql_fetch_object($res)) {
+        $res = mysqli_query($mysqli,"SELECT `text`,`id`,`check_value` FROM `todo` WHERE `user` = $id_user AND `category` = $id AND (`check_date` > ADDDATE(NOW(), INTERVAL -1440 MINUTE) OR `check_value` = 'false') ORDER BY `deadline`,`timestamp` ASC");
+        while ($todo = mysqli_fetch_object($res)) {
             $tid = $todo->id;
             $text = $todo->text;
             // $text = htmlentities($text);
             $text = htmlentities($text, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
             $check = $todo->check_value;
 
-                    //<input id='$tid' class='text' value='$text'/>
-
-
-                    echo "<li class='todo $check' id='$tid'><div id='$tid' class='check'><img class='check $check' src='inc/img/$check.png'/></div>
-                    <div id='$tid' style='' class='text'>$text</div>
-                    <div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
+            //<input id='$tid' class='text' value='$text'/>
+            echo "<li class='todo $check' id='$tid'><div id='$tid' class='check'><img class='check $check' src='inc/img/$check.png'/></div>
+            <div id='$tid' style='' class='text'>$text</div>
+            <div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
         }
 
         echo "<li id='$id' class='add todo'><span class='posmoile'>Add Todo</span></li>";
-
         echo "</ul>";
-    } ?>
+    } 
+    ?>
 
         </section>
 

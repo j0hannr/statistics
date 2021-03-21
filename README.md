@@ -63,10 +63,15 @@ mysql_error();
 # Compliant
 mysqli_error($mysqli);
 
-# MySQL Result
+# MySQL Single Result
 mysql_result(mysqli_query(...));
 # Compliant
-mysqli_free_result(mysqli_query(...));
+mysqli_query(...)->fetch_row()[0] ?? false;
+
+# MySQL Num Rows
+mysql_num_rows($result);
+# Compliant
+mysqli_num_rows($result);
 
 # Charset
 mysql_set_charset("utf8");
