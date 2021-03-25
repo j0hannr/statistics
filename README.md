@@ -27,12 +27,11 @@ It is currently running on ` PHP 5.5.38 ` .
 * [ ] remove unsued files and code
 * [ ] clean/industrie compliant code
 * [ ] get new weather API
-* [ ] using mapbox
+* [ ] (using mapbox)
 * [ ] auto setup
 * [x] make it public
 * [ ] css check up
-* [ ] use modern framwork/library or stack to handle db connection
-* [ ] encrypted daata
+* [ ] encrypted data
 * [ ] additional features
 
 ## cheat sheet
