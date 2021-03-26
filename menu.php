@@ -1,8 +1,5 @@
 <div id="menu" class="five columns u-pull-right">
 
-    <!--                   get it from else where-->
-
-
     <a href="logout.php">
         <div data-icon="L" class="icon"></div>
     </a>
@@ -21,14 +18,5 @@
     <a href="today.php">
         <div data-icon="K" class="icon"></div>
     </a>
-
-
-
-
-
-
-
-
-
 
 </div>

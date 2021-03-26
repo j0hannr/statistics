@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once 'config.php';
-//mysql_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 header('Content-Type: text/html; charset=ISO-8859-1');
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];
@@ -12,24 +12,15 @@ if ($_SESSION['login']==1) {
 
     <head>
         <title>Statistics v5 - Summary</title>
-        <!-- <script src="http://code.jquery.com/jquery-1.9.0.js"></script> -->
-        <!--<script src="jquery.min.js"></script>-->
-        <!--<script src="respond.min.js"></script>-->
+
         <script src="inc/js/jquery-1.9.1.js"></script>
-        <!-- <script src="inc/js/jquery.grid-a-licious.js"></script> -->
-        <script src="inc/js/masonry.pkgd.min.js"></script>
-
-
+        <!-- <script src="inc/js/masonry.pkgd.min.js"></script> -->
 
         <link rel="stylesheet" href="inc/css/summary.css" type="text/css" />
         <link rel="stylesheet" href="inc/css/style.css">
         <link rel="stylesheet" href="inc/css/normalize.css">
         <link rel="stylesheet" href="inc/css/skeleton.css">
         <link rel="stylesheet" href="inc/css/icon-font.css">
-
-        <!--    <script src="inc/js/statistics.js"></script>-->
-
-        <!-- <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" /> -->
 
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 
@@ -66,18 +57,13 @@ if ($_SESSION['login']==1) {
 
         <section id="summary">
 
-            <div id="summary">
-
-            </div>
-
+            <div id="summary"></div>
 
         </section>
-
 
         <!-- scripts -->
         <script src="inc/js/summary.js"></script>
         <script src="inc/js/moment.js"></script>
-
 
     </body>
 

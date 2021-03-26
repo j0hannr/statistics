@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 require "config.php";
 $time = date('Y-m-d H:i:s', time());
@@ -46,7 +47,7 @@ $action = $_REQUEST['action'];
 			while($tag = mysqli_fetch_object($re))
 			{
 			    $name = $tag->name;
-			    $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			    // $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 			    $id = $tag->id;
 			    // echo "<span contenteditable='false' class='t tag id".$id."'>".$name."<img src='inc/img/delete_2.png' class='remove' id='delete'/></span>";
 					echo "<span contenteditable='false' class='t tag id".$id."'>".$name."<div class='remove' id='delete'><div data-icon='q' class='icon'></div></div></span>";
@@ -455,6 +456,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 		//todo
 		case "true":
+			mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			mysqli_query($mysqli,"UPDATE todo SET check_value='false', check_date='$time' WHERE id=".$id);
 			echo "<img class='check false' src='inc/img/false.png'/>";
@@ -471,6 +473,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$id = $_REQUEST['id'];
 			$text = $_REQUEST['text'];
 			$text = $mysqli->real_escape_string($text);
+			echo $text;
             mysqli_set_charset($mysqli, "utf8");
 			$kind = $_REQUEST['kind'];
 			mysqli_query($mysqli,"UPDATE $kind SET text='$text' WHERE id=".$id);
@@ -526,8 +529,12 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 
 		case "addtodo":
 			$id = $_REQUEST['id'];
+
+			$position = mysqli_query($mysqli, "select max(position) from todo where category='$id'")->fetch_row()[0] ?? false;
+			$position++;
 			//$kind = $_REQUEST['kind'];
-			mysqli_query($mysqli,"INSERT INTO todo SET user='$id_user', category='$id', text='...' , timestamp='$time'");
+			// echo "INSERT INTO todo SET user='$id_user', category='$id', text='...' , timestamp='$timestamp'";
+			mysqli_query($mysqli,"INSERT INTO todo SET user='$id_user', category='$id', text='...' , timestamp='$timestamp', position='$position'");
 			$tid = mysqli_insert_id($mysqli);
 			echo "<li class='todo' id='$tid'><div id='$tid' class='check'><img class='check false' src='inc/img/false.png'/></div><div id='$tid' class='text'>...</div><div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 		break;
@@ -561,7 +568,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		break;
 
 		case "edittimeline":
-			mysqli_set_charset($mysqli, "utf8");
+			// mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$width = $_REQUEST['width'];
 			$top = $_REQUEST['top'];
@@ -582,7 +589,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'")->fetch_row()[0] ?? false;
 			echo $color_result;
 
 		break;
@@ -609,7 +616,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'")->fetch_row()[0] ?? false;
 			echo $color_result;
 
 		break;
@@ -1475,26 +1482,25 @@ where user = '$id_user'
                 
                 
 //                get value for this timeframe
-                $field_this = mysql_result(mysqli_query($mysqli,"
-                # display fields
+                $field_this = mysqli_query($mysqli,"
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
 right join entry on field.entry = entry.entry
 where field_settings.user = '$id_user' and field_settings.id = '$id' and entry.day BETWEEN '$start' and '$end'
 group by field_settings.name;
-                "),0);
+                ")->fetch_row()[0] ?? false;
 //			echo $field_this;
             
                 
 //                get value for prev timeframe
-            $field_prev = mysql_result(mysqli_query($mysqli," 
+            $field_prev = mysqli_query($mysqli," 
                 # display fields
 select sum(field.value) as amount from field_settings
 left join field on field_settings.id = field.field
 right join entry on field.entry = entry.entry
 where field_settings.user = '$id_user' and field_settings.id = '$id' and entry.day BETWEEN '$prevstart' and '$prevend'
 group by field_settings.name;
-                "),0);
+                ")->fetch_row()[0] ?? false;
 //			echo $field_prev;
 
                 
@@ -1566,8 +1572,8 @@ group by location.name
 
 ");
 
-        $current = mysql_num_rows($resultes);
-        $prev = mysql_num_rows($resulti);
+        $current = mysqli_num_rows($resultes);
+        $prev = mysqli_num_rows($resulti);
             
 //        echo "";
         echo "<p id='places'>Places</p><div id='places_amount'><div id='prev'><p id='this'>$current</p><p id='prev'>$prev</p></div></div>";
@@ -1635,8 +1641,8 @@ GROUP BY `name` HAVING COUNT(*) > 0 ORDER BY NumOccurrences DESC
 
 ");
            
-            $current = mysql_num_rows($resulte);
-            $prev = mysql_num_rows($resultes);
+            $current = mysqli_num_rows($resulte);
+            $prev = mysqli_num_rows($resultes);
             
             echo "<p id='places'>Tags</p><div id='tags_amount'><div id='prev'><p id='this'>$current</p><p id='prev'>$prev</p></div></div>";
             
@@ -1679,23 +1685,23 @@ echo "<div id='three'>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysqli_query($mysqli,"
+            $color_resultes = mysqli_query($mysqli,"
                 
                 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$start' and '$end'
 	AND user = '$id_user'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 			
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_query($mysqli,"
                 
 SELECT count(text) as Todo FROM todo
 WHERE check_date BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 
 // echo $color_resultes; // echo " TODOS "; // echo $color_resultii; // echo "<br>";
             
@@ -1710,23 +1716,23 @@ echo "</div>";
 echo "<div class='compare'>";
             
             
-            $color_resultes = mysql_result(mysqli_query($mysqli,"
+            $color_resultes = mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$start' and '$end'
 	AND user = '$id_user'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 			
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_query($mysqli,"
                 
 SELECT count(name) as milestone FROM milestone
 WHERE start  BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 
 //            echo $color_resultes;
 //            echo " MILESTONES ";
@@ -1744,7 +1750,7 @@ echo "</div>";
 
 echo "<div class='compare'>";
 
-                        $color_resultes = mysql_result(mysqli_query($mysqli,"
+                        $color_resultes = mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
@@ -1752,18 +1758,17 @@ WHERE day BETWEEN '$start' and '$end'
 	AND user = '$id_user'
 	
                 
-                "),0);
-			
+                ")->fetch_row()[0] ?? false;
 
             
-            $color_resultii = mysql_result(mysqli_query($mysqli,"
+            $color_resultii = mysqli_query($mysqli,"
                 
 SELECT SUM( LENGTH( story ) -  LENGTH( REPLACE( story, ' ', '' ) ) +1 ) as words
 FROM entry
 WHERE day BETWEEN '$prevstart' and '$prevend'
 	AND user = '$id_user'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 
 // echo $color_resultes; // echo " WORDS "; // echo $color_resultii; // echo "<br>";
             
@@ -1777,24 +1782,24 @@ echo "</div>";
 
 echo "<div class='compare'>";
             
-               $weather_1 = mysql_result(mysqli_query($mysqli,"
+               $weather_1 = mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry
 WHERE entry.user = '$id_user' AND entry.day BETWEEN '$start' and '$end'
 	
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 			
 
             
-            $weather_2 = mysql_result(mysqli_query($mysqli,"
+            $weather_2 = mysqli_query($mysqli,"
                 
 SELECT ROUND(AVG(tempAvg)) FROM `location_day` 
 INNER JOIN `entry` ON entry.entry = location_day.entry
 WHERE entry.user = '$id_user' AND entry.day BETWEEN '$prevstart' and '$prevend'
                 
-                "),0);
+                ")->fetch_row()[0] ?? false;
 
 // echo $weather_1; // echo " WEATHER "; // echo $weather_2; // echo "<br>";
             

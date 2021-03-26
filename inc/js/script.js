@@ -763,11 +763,11 @@ $(document).ready(function() {
             case 40: // down
                 break;
                 
-            case 87: // down
+            // case 87: // down
                 
-                $('#location').trigger('change');
+            //     $('#location').trigger('change');
                 
-            break;
+            // break;
 
             default:
                 return; // exit this handler for other keys
