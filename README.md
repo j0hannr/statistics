@@ -80,23 +80,6 @@ mysql_set_charset("utf8");
 # Compliant
 mysqli_set_charset($mysqli, "utf8");
 ```
-## Errors
-- `ajax.php` 'addday' location not given
-- Tags 'w' not accepted
 
 ## notes 
 - [MySQL Queries](https://websitebeaver.com/php-pdo-vs-mysqli)
-
-## structure
-
-### files
-- ` index.php ` deprcated 
-- `today.php` main page
-- ` menu.php ` file for the menu 
-- ` login.php ` login page
-- ` logout.php ` log user out
-- ` config.php ` connect to database
-
-### unknowns
-- ` offline.php ` ?
-- ` dayview.sql ` ?
