@@ -12,10 +12,12 @@ $id_user = $_SESSION['id'];
 <html>
 <head>
     <title>Overview</title>
-    <!--<script src="http://code.jquery.com/jquery-1.9.0.js"></script>-->
-    <script src="inc/js/jquery-1.9.1.js"></script>
+
+	<script src="inc/js/jquery-1.9.1.js"></script>
+	<script src="inc/js/overview.js"></script>
+
     <link rel="stylesheet" href="inc/css/overview.css" type="text/css" />
-    <script src="inc/js/overview.js"></script>
+    
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
 
 </head>

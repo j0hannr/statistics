@@ -77,11 +77,13 @@ if ($_SESSION['login']==1) {
 
         <?php
 
-        $begin = new DateTime('2021-01-01');
-        $end = new DateTime('2022-01-01');
+        $year = date('Y');
 
-        $qu_begin = '2021-01-01';
-        $qu_end = '2021-12-31';
+        $begin = new DateTime( $year.'-01-01' );
+        $end = new DateTime( $year.'-12-31' );
+
+        $qu_begin = $year.'-01-01';
+        $qu_end = $year.'-12-31';
         
 
         $interval = DateInterval::createFromDateString('1 day');

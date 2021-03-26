@@ -5,8 +5,6 @@ require_once 'config.php';
 
 mysqli_set_charset($mysqli, "utf8");
 
-// header('Content-Type: text/html; charset=ISO-8859-1');
-
 if ($_SESSION['login']==1) {
 
     $id_user = $_SESSION['id'];
@@ -19,23 +17,16 @@ if ($_SESSION['login']==1) {
 
     <head>
         <title>Todo v5</title>
-        <!-- <script src="http://code.jquery.com/jquery-1.9.0.js"></script> -->
-        <!--<script src="jquery.min.js"></script>-->
-        <!--<script src="respond.min.js"></script>-->
+
         <script src="inc/js/jquery-1.9.1.js"></script>
-        <!-- <script src="inc/js/jquery.grid-a-licious.js"></script> -->
         <script src="inc/js/masonry.pkgd.min.js"></script>
 
-
-
-        <!-- <link rel="stylesheet" href="inc/css/todo.css" type="text/css" /> -->
         <link rel="stylesheet" href="inc/css/style.css">
         <link rel="stylesheet" href="inc/css/normalize.css">
         <link rel="stylesheet" href="inc/css/skeleton.css">
         <link rel="stylesheet" href="inc/css/icon-font.css">
 
         <script src="inc/js/todo.js"></script>
-        <!-- <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" /> -->
 
     </head>
 

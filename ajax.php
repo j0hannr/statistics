@@ -47,7 +47,7 @@ $action = $_REQUEST['action'];
 			while($tag = mysqli_fetch_object($re))
 			{
 			    $name = $tag->name;
-			    $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
+			    // $name = htmlentities($name, ENT_COMPAT | ENT_HTML401, 'ISO-8859-1');
 			    $id = $tag->id;
 			    // echo "<span contenteditable='false' class='t tag id".$id."'>".$name."<img src='inc/img/delete_2.png' class='remove' id='delete'/></span>";
 					echo "<span contenteditable='false' class='t tag id".$id."'>".$name."<div class='remove' id='delete'><div data-icon='q' class='icon'></div></div></span>";

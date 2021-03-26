@@ -57,11 +57,12 @@ if ($_SESSION['login']==1){
                         ?>
 
                     </div>
+
                     <div class="description">Places</div>
 
                 </div>
 
-                <?php include 'menu.php';?>
+                <?php include 'menu.php'; ?>
 
             </div>
 

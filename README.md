@@ -19,12 +19,14 @@ It is currently running on ` PHP 5.5.38 ` .
 * [x] revive project
 * [x] running on ` PHP 7` 
 * [ ] config file (auto setup)
-* [ ] misterious w (tag input today.php)
+* [x] misterious w (tag input today.php)
 * [ ] about page with features
 * [ ] release v1
 * [ ] weather api
 * [ ] daily graph
-* [ ] remove unsued files and code
+* [x] remove unsued files and code
+* [ ] clean ajax.php file
+* [ ] clean javascript files
 * [ ] clean/industrie compliant code
 * [ ] get new weather API
 * [ ] (using mapbox)
@@ -33,7 +35,7 @@ It is currently running on ` PHP 5.5.38 ` .
 * [ ] css check up
 * [ ] encrypted data
 * [ ] additional features
-* [ ] dynamic timeline year
+* [x] dynamic timeline year
 
 ## cheat sheet
 updating code to be compliant with `PHP` 7
