@@ -2,18 +2,15 @@
 <?php
 session_start();
 require_once 'config.php';
-mysql_set_charset("utf8");
+mysqli_set_charset($mysqli, "utf8");
 
 if ($_SESSION['login']==1) {
     $id_user = $_SESSION['id'];
     $today = date('Y-m-d', time()); ?>
 
-    <!--
-
+<!--
 - clean up
 - name and projekt
-
-
 
 - layer height = timeline heightx
 - grid [a,b] a = 1; b = layer height / 2
@@ -21,13 +18,12 @@ if ($_SESSION['login']==1) {
 - day length = 24
 - timeline height = layer height * layer count
 - .dateline = layer height * layer count
-
 -->
 
 
 
-    <!doctype html>
-    <html>
+<!doctype html>
+<html>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -164,12 +160,12 @@ if ($_SESSION['login']==1) {
                 <!--- timelines -->
 
                 <?php
-  $re = mysql_query("select timeline.id, `width`, `top`, days, start, end, layer, `left`, timeline.name, `project`, category.color from `timeline`
+  $re = mysqli_query($mysqli, "select timeline.id, `width`, `top`, days, start, end, layer, `left`, timeline.name, `project`, category.color from `timeline`
 LEFT JOIN category ON category.id = timeline.project
 where timeline.user = '$id_user' AND timeline.start BETWEEN '$qu_begin' AND '$qu_end'");
 
-    mysql_set_charset("utf8");
-    while ($cat = mysql_fetch_object($re)) {
+    // mysql_set_charset("utf8");
+    while ($cat = mysqli_fetch_object($re)) {
         $name = $cat->name;
 //        $name = htmlentities($name);
         $name =  htmlspecialchars($name, ENT_QUOTES);
@@ -188,8 +184,8 @@ where timeline.user = '$id_user' AND timeline.start BETWEEN '$qu_begin' AND '$qu
         <input class='name' value='".$name."' placeholder='Name'/>
         <select class='project'>";
 
-        $pro = mysql_query("select text, id, color from category where user = '$id_user' and archive = 'false'");
-        while ($pros = mysql_fetch_object($pro)) {
+        $pro = mysqli_query($mysqli, "select text, id, color from category where user = '$id_user' and archive = 'false'");
+        while ($pros = mysqli_fetch_object($pro)) {
             $id = $pros->id;
             $name = $pros->text;
 
@@ -268,11 +264,11 @@ $end = date("j. F", strtotime($end));
                     <!-- milestones -->
 
                     <?php
-  $re = mysql_query("select milestone.id, `width`, `top`, start, layer, `left`, milestone.name, `project`, category.color from `milestone`
+  $re = mysqli_query($mysqli, "select milestone.id, `width`, `top`, start, layer, `left`, milestone.name, `project`, category.color from `milestone`
 LEFT JOIN category ON category.id = milestone.project
 where milestone.user = '$id_user' AND milestone.start BETWEEN '$qu_begin' AND '$qu_end'");
 
-    while ($cat = mysql_fetch_object($re)) {
+    while ($cat = mysqli_fetch_object($re)) {
         $name = $cat->name;
         $name = htmlentities($name, ENT_QUOTES);
         $id = $cat->id;
@@ -300,8 +296,8 @@ color:#".$color.";' class='project'>";
         
         echo "<div class='text' style='color:#".$color.";'>";
 
-        $pro = mysql_query("select text, id, color from category where user = '$id_user' and archive = 'false'");
-        while ($pros = mysql_fetch_object($pro)) {
+        $pro = mysqli_query($mysqli, "select text, id, color from category where user = '$id_user' and archive = 'false'");
+        while ($pros = mysqli_fetch_object($pro)) {
             $id = $pros->id;
             $name = $pros->text;
 
@@ -349,8 +345,8 @@ for ($i = 1; $i <= 10; $i++) {
                             <select class='project'>";
                         
 
-$pro = mysql_query("select text, id, color from category where user = '$id_user' and archive = 'false'");
-    while ($pros = mysql_fetch_object($pro)) {
+$pro = mysqli_query($mysqli, "select text, id, color from category where user = '$id_user' and archive = 'false'");
+    while ($pros = mysqli_fetch_object($pro)) {
         $id = $pros->id;
         $name = $pros->text;
 
@@ -389,8 +385,8 @@ for ($i = 1; $i <= 10; $i++) {
         <select style='color: black;' class='project'>";
     
     
-    $pro = mysql_query("select text, id, color from category where user = '$id_user' and archive = 'false'");
-        while ($pros = mysql_fetch_object($pro)) {
+    $pro = mysqli_query($mysqli, "select text, id, color from category where user = '$id_user' and archive = 'false'");
+        while ($pros = mysqli_fetch_object($pro)) {
             $id = $pros->id;
             $name = $pros->text;
 
@@ -428,8 +424,8 @@ for ($i = 1; $i <= 10; $i++) {
         
         <select style="color: black;" class='project'>
 <?php
-$pro = mysql_query("select text, id, color from category where user = '$id_user' and archive = 'false'");
-    while ($pros = mysql_fetch_object($pro)) {
+$pro = mysqli_query($mysqli, "select text, id, color from category where user = '$id_user' and archive = 'false'");
+    while ($pros = mysqli_fetch_object($pro)) {
         $id = $pros->id;
         $name = $pros->text;
 
@@ -484,9 +480,9 @@ $pro = mysql_query("select text, id, color from category where user = '$id_user'
 
     </body>
 
-    </html>
+</html>
 
-    <?php
+<?php
 
 } else {
     header('Location: http://'.$host.'/login.php');

@@ -567,7 +567,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 		break;
 
 		case "edittimeline":
-			mysqli_set_charset($mysqli, "utf8");
+			// mysqli_set_charset($mysqli, "utf8");
 			$id = $_REQUEST['id'];
 			$width = $_REQUEST['width'];
 			$top = $_REQUEST['top'];
@@ -588,7 +588,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'")->fetch_row()[0] ?? false;
 			echo $color_result;
 
 		break;
@@ -615,7 +615,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//echo $id;
 			//echo $kind;
 
-			$color_result = mysql_result(mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'"),0);
+			$color_result = mysqli_query($mysqli,"select color from category where user = '$id_user' and id = '$project'")->fetch_row()[0] ?? false;
 			echo $color_result;
 
 		break;

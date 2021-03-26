@@ -19,7 +19,7 @@ It is currently running on ` PHP 5.5.38 ` .
 * [ ] revive project
 * [ ] running on ` PHP 7` 
 * [ ] config file (auto setup)
-* [ ] misterious w (tag input)
+* [ ] misterious w (tag input today.php)
 * [ ] about page with features
 * [ ] release v1
 * [ ] weather api
@@ -33,6 +33,7 @@ It is currently running on ` PHP 5.5.38 ` .
 * [ ] css check up
 * [ ] encrypted data
 * [ ] additional features
+* [ ] dynamic timeline year
 
 ## cheat sheet
 updating code to be compliant with `PHP` 7
