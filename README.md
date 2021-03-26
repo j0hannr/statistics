@@ -16,8 +16,8 @@ It is currently running on ` PHP 5.5.38 ` .
 
 
 ### goals 
-* [ ] revive project
-* [ ] running on ` PHP 7` 
+* [x] revive project
+* [x] running on ` PHP 7` 
 * [ ] config file (auto setup)
 * [ ] misterious w (tag input today.php)
 * [ ] about page with features
@@ -64,7 +64,7 @@ mysql_error();
 mysqli_error($mysqli);
 
 # MySQL Single Result
-mysql_result(mysqli_query(...));
+mysql_result(mysqli_query(...),0);
 # Compliant
 mysqli_query(...)->fetch_row()[0] ?? false;
 

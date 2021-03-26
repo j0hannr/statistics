@@ -428,18 +428,18 @@ $(document).ready(function () {
     });
 
     $('input.name').keydown(function (e) {
-        if (e.keyCode == 13) {
+        // if (e.keyCode == 13) {
 
             var id = $(this).parent('div.timeline.draggable').attr('id');
-//             alert(id);
+            // alert(id);
             updateTimeline(id);
 
-        }
+        // }
     });
 
     $('.timeline select.project').on('change', function () {
         var id = $(this).parent('div.timeline.draggable').attr('id');
-        // alert(id);
+        alert(id);
         updateTimeline(id);
 
     });
