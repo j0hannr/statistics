@@ -12,7 +12,7 @@ all is manually written as i have learned it myself and done it several years ag
 using ` MySQL ` for the database, ` PHP ` and ` jQuery `.
 
 ### requirements
-It is currently running on ` PHP 5.5.38 ` . 
+It is running on ` PHP 7 ` . 
 
 
 ### goals 
@@ -36,6 +36,7 @@ It is currently running on ` PHP 5.5.38 ` .
 * [ ] encrypted data
 * [ ] additional features
 * [x] dynamic timeline year
+* [ ] outsource host and path variabel in js files
 
 ## cheat sheet
 updating code to be compliant with `PHP` 7
