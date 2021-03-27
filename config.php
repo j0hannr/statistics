@@ -1,5 +1,9 @@
 <?php
 
+if (!file_exists('config_mysql.php')) {
+    header('Location: setup.php');
+}
+
 include 'config_mysql.php';
 
 // path
