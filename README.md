@@ -30,7 +30,9 @@ It is running on ` PHP 7 ` .
 * [ ] clean/industrie compliant code
 * [ ] get new weather API
 * [ ] (using mapbox)
-* [ ] auto setup
+* [x] auto setup
+* [ ] create mysql tables
+* [ ] register user
 * [x] make it public
 * [ ] css check up
 * [ ] encrypted data
