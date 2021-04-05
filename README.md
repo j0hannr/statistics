@@ -18,8 +18,10 @@ It is running on ` PHP 7 ` .
 ### goals 
 * [x] revive project
 * [x] running on ` PHP 7` 
-* [ ] config file (auto setup)
+* [ ] config file (auto setup db tables)
 * [x] misterious w (tag input today.php)
+* [x] Todo insert js issue
+* [x] Timeline insert ID issue
 * [ ] about page with features
 * [ ] release v1
 * [ ] weather api

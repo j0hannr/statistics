@@ -439,7 +439,7 @@ $(document).ready(function () {
 
     $('.timeline select.project').on('change', function () {
         var id = $(this).parent('div.timeline.draggable').attr('id');
-        alert(id);
+        // alert(id);
         updateTimeline(id);
 
     });
@@ -536,7 +536,7 @@ $(document).ready(function () {
 
         var start = left / (daylength + daylengthborder);
         start = moment(year + '-01-01').add(start, 'd').format('YYYY-MM-DD');
-//         alert(start);
+        // alert(start);
         var end = (left / (daylength + daylengthborder)) + days;
         end = moment(year + '-01-01').add(end - 1, 'd').format('YYYY-MM-DD');
 //         alert(end);

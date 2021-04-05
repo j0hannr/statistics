@@ -5,10 +5,10 @@ $db_user = $_POST['user'];
 $db_database = $_POST['database'];
 $db_pass = $_POST['pass'];
 
-echo "<br>".$db_host;
-echo "<br>".$db_user;
-echo "<br>".$db_database;
-echo "<br>".$db_pass;
+// echo "<br>".$db_host;
+// echo "<br>".$db_user;
+// echo "<br>".$db_database;
+// echo "<br>".$db_pass;
 
 $host  = $_SERVER['HTTP_HOST'];
 $uri   = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
@@ -28,8 +28,7 @@ catch(Exception $e) {
     exit('Error connecting to database'); // Should be a message a typical user could understand
 }
 
-$file = '
-<?php
+$file = '<?php
 // connecting to MySQL DB
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 try {

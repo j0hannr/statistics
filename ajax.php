@@ -1,7 +1,6 @@
 <?php
-
 session_start();
-require "config.php";
+require_once "config.php";
 $time = date('Y-m-d H:i:s', time());
 $timestamp = date('Y-m-d H:i:s', time());
 $id_user = $_SESSION['id'];
@@ -10,6 +9,7 @@ if (empty($id_user)) {
 	echo "notlogged";
 	exit;
 }
+
 
 $action = $_REQUEST['action'];
 
@@ -27,8 +27,8 @@ $action = $_REQUEST['action'];
 			mysqli_query($mysqli,"INSERT INTO `tags` (`name`, `entry`, `timestamp`, `user`) VALUES ('$value','$date','$timestamp','$id_user')");
 			$id = mysqli_insert_id($mysqli);
 			if ($id == '0') { echo "error";} else {
-			// echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<img src='inc/img/delete_2.png' class='remove' id='delete'/></span>";
-			echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<div class='remove' id='delete'><div data-icon='q' class='icon'></div></div></span>";
+				// echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<img src='inc/img/delete_2.png' class='remove' id='delete'/></span>";
+				echo "<span contenteditable='false' class='t tag id".$id."'>".$value."<div class='remove' id='delete'><div data-icon='q' class='icon'></div></div></span>";
 			}
 
 		break;
@@ -521,7 +521,7 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			//$text = $_REQUEST['text'];
 			//$text = $mysqli->real_escape_string($text);
 			mysqli_query($mysqli,"UPDATE category SET color='$color' WHERE id=".$id);
-			echo "UPDATE category SET archive='$color' WHERE id=".$id;
+			// echo "UPDATE category SET archive='$color' WHERE id=".$id;
 			//echo $color;
 			//echo $id;
 			//echo $kind;
@@ -546,11 +546,10 @@ ON DUPLICATE KEY UPDATE location='$id', text='$summary', status='$status', sunri
 			$left = $_REQUEST['left'];
 			//$kind = $_REQUEST['kind'];
 			mysqli_query($mysqli,"INSERT INTO timeline SET user='$id_user' , `top`='$top' , `width`='$width' , `left`='$left', `name`='Timeline', `timestamp`='$time'");
-
-
 			$tid = mysqli_insert_id($mysqli);
 			// echo "<li class='todo' id='$tid'><div id='$tid' class='check'><img class='check false' src='inc/img/false.png'/></div><div id='$tid' class='text'>...</div><div class='options'><img class='edde edit' src='inc/img/edit.png'/><img class='edde delete' src='inc/img/delete.png'/><img class='cencel writ' src='inc/img/cencel.png'/><img class='done writ' src='inc/img/done.png'/></div></li>";
 			echo $tid;
+			// echo '291';
 		break;
 		
 		case "addmilestone":
